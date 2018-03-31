@@ -1,48 +1,84 @@
-import numpy as np
-import time
+# Définition des constantes
+LARGEURGRILLE = 7
+HAUTEURGRILLE = 6
+CASEVIDE = "."
+CASEJOUEUR1 = "X"
+CASEJOUEUR2 = "O"
 
 
-# Génère la grille de jeu
-plateau = []
-plateau.append(["/"," " ,"A","B","C","D","E","F","G"])
-for i in range(6):
-    plateau.append([i+1,"|",".",".",".",".",".",".","."])
+# Création de la grille de jeu
+def creer_grille():
+    liste = []
+    for i in range(HAUTEURGRILLE):
+        liste.append([CASEVIDE] * LARGEURGRILLE)
+    return liste
 
 
-# Affiche une matrice d'une manière 'propre' : servira à afficher la grille de jeu
-def Affiche(M):
-    nligne=len(M)
-    ncolonne=len(M[0])
-    for i in range(0,nligne):
-        for j in range(0,ncolonne) :
-            print(M[i][j],end=' ')
+# Génère les en-têtes : liste de chaînes
+def en_tete_colonnes():
+    return [str(numero_colonne) for numero_colonne in range(LARGEURGRILLE)]
+
+
+# Affiche une matrice d'une manière 'propre' : sert à afficher la grille de jeu
+def affiche_grille(matrice):
+    nligne = len(matrice)
+    ncolonne = len(matrice[0])
+    for i in range(nligne):
+        for j in range(ncolonne):
+            print(matrice[i][j], end=' ')
         print()
 
 
-# Tour du joueur :
-#Teste si la lettre entrée par le joueur est dans la liste ref, et si c'est le cas renvoie 0 pour A, 1 pour B, ect
-def joueur():
+# Affiche une liste d'une manière 'propre' : sert à afficher l'en-tête
+def affiche_en_tete(en_tete):
+    ncolonne = len(en_tete)
+    for i in range(ncolonne):
+        print(en_tete[i], end=' ')
+    print()
+
+
+# Affiche le plateau de jeu : en tête + grille
+def affiche_plateau(en_tete, grille):
+    affiche_en_tete(en_tete)
+    affiche_grille(grille)
+
+
+# Teste si la saisie du joueur est valide (une des valeurs de l'en-tête) : retourne l'indice de la colonne choisie
+def saisie(en_tete):
     reponse = input("Où voulez-vous jouer ? ")
-    ref = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
-    if reponse in ref:
-        return ref.index(reponse)
+    if reponse in en_tete:
+        return en_tete.index(reponse)
     else:
-        print('Veuillez entrer la lettre correspondant la colonne choisie')
-        joueur()
+        print('Veuillez saisir une valeur correcte')
+        return saisie(en_tete)
 
 
-#Place le pion du joueur dans la première case innocupé de la colonne numérotée 'nbre'
-def plaçagedupion(nbre):
-    n = 1
-    for k in range(5):
-        if plateau[k + 1][nbre + 2] == '.':
+# Gère la saisie du joueur : modifie la grille en fonction de la saisie du joueur, renvoie True si la grille à été
+# modifiée, False sinon
+def gestion_saisie(grille, saisie_joueur, casejoueur):
+    n = 0
+    for k in range(HAUTEURGRILLE-1):
+        if grille[k][saisie_joueur] == CASEVIDE:
             n += 1
-    plateau[n][nbre + 2] = "x"
+        else:
+            grille[n][saisie_joueur] = casejoueur
+            return True
+
+
+    return False
+
+
+# Grille représentant l'état du jeu
+grille = creer_grille()
+# En tête qui sera affichée au dessus de la grille
+en_tete = en_tete_colonnes()
+
+affiche_plateau(en_tete, grille)
+n = saisie(en_tete)
+gestion_saisie(grille, n, CASEJOUEUR1)
+affiche_plateau(en_tete, grille)
+
 
 # Pour l'animation : il faudrait modifier 'en direct' le plateau qui serait tout le temps affiché
 
-
-Affiche(plateau)
-plaçagedupion(joueur())
-Affiche(plateau)
 
