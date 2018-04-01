@@ -1,3 +1,5 @@
+import os
+
 # Définition des constantes
 LARGEURGRILLE = 7
 HAUTEURGRILLE = 6
@@ -6,7 +8,12 @@ CASEJOUEUR1 = "X"
 CASEJOUEUR2 = "O"
 
 
-# Création de la grille de jeu
+# Efface la console
+def clear():
+    os.system('cls')
+
+
+# Crée de la grille de jeu
 def creer_grille():
     liste = []
     for i in range(HAUTEURGRILLE):
@@ -56,15 +63,10 @@ def saisie(en_tete):
 # Gère la saisie du joueur : modifie la grille en fonction de la saisie du joueur, renvoie True si la grille à été
 # modifiée, False sinon
 def gestion_saisie(grille, saisie_joueur, casejoueur):
-    n = 0
-    for k in range(HAUTEURGRILLE-1):
+    for k in range(HAUTEURGRILLE-1, -1, -1):
         if grille[k][saisie_joueur] == CASEVIDE:
-            n += 1
-        else:
-            grille[n][saisie_joueur] = casejoueur
+            grille[k][saisie_joueur] = casejoueur
             return True
-
-
     return False
 
 
@@ -73,12 +75,10 @@ grille = creer_grille()
 # En tête qui sera affichée au dessus de la grille
 en_tete = en_tete_colonnes()
 
+
 affiche_plateau(en_tete, grille)
 n = saisie(en_tete)
 gestion_saisie(grille, n, CASEJOUEUR1)
+clear()
 affiche_plateau(en_tete, grille)
-
-
-# Pour l'animation : il faudrait modifier 'en direct' le plateau qui serait tout le temps affiché
-
 
