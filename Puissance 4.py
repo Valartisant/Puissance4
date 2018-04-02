@@ -9,9 +9,9 @@ CASEJOUEUR1 = "X"
 CASEJOUEUR2 = "O"
 
 
-# Efface la console
+# Efface la console (1ère commande pour windows, 2ème pour linux)
 def clear():
-    os.system('cls')
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 
 # Crée de la grille de jeu
