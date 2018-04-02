@@ -1,5 +1,5 @@
 import os
-
+#Coucou c'est Pablo
 # Définition des constantes
 LARGEURGRILLE = 7
 HAUTEURGRILLE = 6
