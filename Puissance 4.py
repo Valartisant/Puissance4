@@ -132,7 +132,8 @@ def recommencer():
             return False
     else:
         print("je n'ai pas bien compris...")
-        recommencer()
+        return recommencer()
+
 
 
 # Initialise une nouvelle partie : renvoie le joueur courant et la grille vierge
