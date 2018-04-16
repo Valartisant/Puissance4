@@ -30,29 +30,20 @@ def en_tete_colonnes():
     return [str(numero_colonne) for numero_colonne in range(LARGEURGRILLE)]
 
 
-# Affiche une matrice d'une manière 'propre' : sert à afficher la grille de jeu
-def affiche_grille(matrice):
+# Affiche le plateau de jeu : en tête + grille
+def affiche_plateau(en_tete, matrice):
+    #affiche l'en-tête
+    ncolonne = len(en_tete)
+    for i in range(ncolonne):
+        print(en_tete[i], end=' ')
+    print()
+    #affiche la grille
     nligne = len(matrice)
     ncolonne = len(matrice[0])
     for i in range(nligne):
         for j in range(ncolonne):
             print(matrice[i][j], end=' ')
         print()
-
-
-# Affiche une liste d'une manière 'propre' : sert à afficher l'en-tête
-def affiche_en_tete(en_tete):
-    ncolonne = len(en_tete)
-    for i in range(ncolonne):
-        print(en_tete[i], end=' ')
-    print()
-
-
-
-# Affiche le plateau de jeu : en tête + grille
-def affiche_plateau(en_tete, grille):
-    affiche_en_tete(en_tete)
-    affiche_grille(grille)
 
 
 # Teste si la saisie du joueur est valide (une des valeurs de l'en-tête) : retourne l'indice de la colonne choisie
