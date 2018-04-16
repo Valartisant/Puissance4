@@ -146,22 +146,25 @@ joueur_courant, grille = nouvelle_partie()
 # Déroulement du jeu
 while True:
     n = saisie(en_tete, joueur_courant)
-    gestion_saisie(grille, n, joueur_courant)
-    clear()
-    affiche_plateau(en_tete, grille)
-    if gain_du_jeu(grille, joueur_courant):
-        print('Bravo ! Gain des', joueur_courant, '!')
-        if recommencer():
-            joueur_courant, grille = nouvelle_partie()
+    if gestion_saisie(grille, n, joueur_courant):
+        clear()
+        affiche_plateau(en_tete, grille)
+        if gain_du_jeu(grille, joueur_courant):
+            print('Bravo ! Gain des', joueur_courant, '!')
+            if recommencer():
+                joueur_courant, grille = nouvelle_partie()
+            else:
+                break
+        elif complet(grille):
+            print("Fin de la partie, personne n'a gagné !")
+            if recommencer():
+                joueur_courant, grille = nouvelle_partie()
+            else:
+                break
+        elif joueur_courant == CASEJOUEUR1:
+            joueur_courant = CASEJOUEUR2
         else:
-            break
-    elif complet(grille):
-        print("Fin de la partie, personne n'a gagné !")
-        if recommencer():
-            joueur_courant, grille = nouvelle_partie()
-        else:
-            break
-    elif joueur_courant == CASEJOUEUR1:
-        joueur_courant = CASEJOUEUR2
-    else:
-        joueur_courant = CASEJOUEUR1
+            joueur_courant = CASEJOUEUR1
+    else :
+        print()
+        print('Cette colonne est pleine !')
