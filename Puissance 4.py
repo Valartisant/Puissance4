@@ -123,7 +123,15 @@ def complet(grille):
 
 # Demande au joueur si il souhaite rejouer
 def recommencer():
-    return input('Voulez-vous rejouer ? o/n ') == 'o'
+    i = input('Voulez-vous rejouer ? o/n ')
+    if i in ('o','n'):
+        if i == 'o':
+            return True
+        else :
+            return False
+    else:
+        print("Je n'ai pas bien compris...")
+        recommencer()
 
 
 # Initialise une nouvelle partie : renvoie le joueur courant et la grille vierge
@@ -146,22 +154,25 @@ joueur_courant, grille = nouvelle_partie()
 # Déroulement du jeu
 while True:
     n = saisie(en_tete, joueur_courant)
-    gestion_saisie(grille, n, joueur_courant)
-    clear()
-    affiche_plateau(en_tete, grille)
-    if gain_du_jeu(grille, joueur_courant):
-        print('Bravo ! Gain des', joueur_courant, '!')
-        if recommencer():
-            joueur_courant, grille = nouvelle_partie()
+    if gestion_saisie(grille, n, joueur_courant):
+        clear()
+        affiche_plateau(en_tete, grille)
+        if gain_du_jeu(grille, joueur_courant):
+            print('Bravo ! Gain des', joueur_courant, '!')
+            if recommencer():
+                joueur_courant, grille = nouvelle_partie()
+            else:
+                break
+        elif complet(grille):
+            print("Fin de la partie, personne n'a gagné !")
+            if recommencer():
+                joueur_courant, grille = nouvelle_partie()
+            else:
+                break
+        elif joueur_courant == CASEJOUEUR1:
+            joueur_courant = CASEJOUEUR2
         else:
-            break
-    elif complet(grille):
-        print("Fin de la partie, personne n'a gagné !")
-        if recommencer():
-            joueur_courant, grille = nouvelle_partie()
-        else:
-            break
-    elif joueur_courant == CASEJOUEUR1:
-        joueur_courant = CASEJOUEUR2
-    else:
-        joueur_courant = CASEJOUEUR1
+            joueur_courant = CASEJOUEUR1
+    else :
+        print()
+        print('Cette colonne est pleine !')
