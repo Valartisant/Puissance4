@@ -173,3 +173,5 @@ while True:
     else :
         print()
         print("Cette colonne n'est pas valide !")
+
+print("\n\n adieu...")
