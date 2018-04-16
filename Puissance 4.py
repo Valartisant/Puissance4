@@ -66,10 +66,11 @@ def saisie(en_tete, case):
 # modifiée, False sinon
 # On remonte la colonne choisie par le joueur et on remplit la première case vide par son pion
 def gestion_saisie(grille, saisie_joueur, casejoueur):
-    for k in range(HAUTEURGRILLE-1, -1, -1):
-        if grille[k][saisie_joueur] == CASEVIDE:
-            grille[k][saisie_joueur] = casejoueur
-            return True
+    if grille[0][saisie_joueur] == CASEVIDE:
+        for k in range(HAUTEURGRILLE-1, -1, -1):
+            if grille[k][saisie_joueur] == CASEVIDE:
+                grille[k][saisie_joueur] = casejoueur
+                return True
     return False
 
 
@@ -123,15 +124,7 @@ def complet(grille):
 
 # Demande au joueur si il souhaite rejouer
 def recommencer():
-    i = input('Voulez-vous rejouer ? o/n ')
-    if i in ('o','n'):
-        if i == 'o':
-            return True
-        else :
-            return False
-    else:
-        print("Je n'ai pas bien compris...")
-        recommencer()
+    return input('Voulez-vous rejouer ? o/n ') == 'o'
 
 
 # Initialise une nouvelle partie : renvoie le joueur courant et la grille vierge
@@ -175,4 +168,6 @@ while True:
             joueur_courant = CASEJOUEUR1
     else :
         print()
-        print('Cette colonne est pleine !')
+        print("Cette colonne n'est pas valide !")
+        
+        
