@@ -5,8 +5,10 @@ LARGEURGRILLE = 7
 HAUTEURGRILLE = 6
 NOMBREDECASESPOURGAGNER = 4
 CASEVIDE = "."
+
 CASEJOUEUR1 = "X"
 CASEJOUEUR2 = "O"
+SEPARATION = "="
 
 
 # Efface la console (1ère commande pour windows, 2ème pour linux)
@@ -19,6 +21,8 @@ def creer_grille():
     liste = []
     for i in range(HAUTEURGRILLE):
         liste.append([CASEVIDE] * LARGEURGRILLE)
+    liste.append([''] * LARGEURGRILLE)
+    liste.append([SEPARATION] * LARGEURGRILLE)
     return liste
 
 
@@ -43,6 +47,7 @@ def affiche_en_tete(en_tete):
     for i in range(ncolonne):
         print(en_tete[i], end=' ')
     print()
+
 
 
 # Affiche le plateau de jeu : en tête + grille
@@ -124,7 +129,15 @@ def complet(grille):
 
 # Demande au joueur si il souhaite rejouer
 def recommencer():
-    return input('Voulez-vous rejouer ? o/n ') == 'o'
+    i = input('Voulez-vous rejouer ? o/n ')
+    if i in ('o','n'):
+        if i == 'o':
+            return True
+        else:
+            return False
+    else:
+        print("je n'ai pas bien compris...")
+        return recommencer()
 
 
 # Initialise une nouvelle partie : renvoie le joueur courant et la grille vierge
@@ -146,6 +159,7 @@ joueur_courant, grille = nouvelle_partie()
 
 # Déroulement du jeu
 while True:
+    print()
     n = saisie(en_tete, joueur_courant)
     if gestion_saisie(grille, n, joueur_courant):
         clear()
@@ -169,5 +183,3 @@ while True:
     else :
         print()
         print("Cette colonne n'est pas valide !")
-        
-        
