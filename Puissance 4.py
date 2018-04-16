@@ -174,4 +174,4 @@ while True:
         print()
         print("Cette colonne n'est pas valide !")
 
-print("\n\n adieu...")
+print("\n\nAdieu...")
