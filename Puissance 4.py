@@ -124,15 +124,7 @@ def complet(grille):
 
 # Demande au joueur si il souhaite rejouer
 def recommencer():
-    i = input('Voulez-vous rejouer ? o/n ')
-    if i in ('o','n'):
-        if i == 'o':
-            return True
-        else:
-            return False
-    else:
-        print("je n'ai pas bien compris...")
-        recommencer()
+    return input('Voulez-vous rejouer ? o/n ') == 'o'
 
 
 # Initialise une nouvelle partie : renvoie le joueur courant et la grille vierge
@@ -177,3 +169,5 @@ while True:
     else :
         print()
         print("Cette colonne n'est pas valide !")
+        
+        
