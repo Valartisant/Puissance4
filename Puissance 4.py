@@ -27,15 +27,8 @@ def en_tete_colonnes():
     return [str(numero_colonne) for numero_colonne in range(LARGEURGRILLE)]
 
 
-# Affiche le plateau de jeu : en tête + grille
-def affiche_plateau(en_tete, matrice):
-
-    #affiche l'en-tête
-    ncolonne = len(en_tete)
-    for i in range(ncolonne):
-        print(en_tete[i], end=' ')
-    print()
-    #affiche la grille
+# Affiche une matrice d'une manière 'propre' : sert à afficher la grille de jeu
+def affiche_grille(matrice):
     nligne = len(matrice)
     ncolonne = len(matrice[0])
     for i in range(nligne):
@@ -43,6 +36,19 @@ def affiche_plateau(en_tete, matrice):
             print(matrice[i][j], end=' ')
         print()
 
+
+# Affiche une liste d'une manière 'propre' : sert à afficher l'en-tête
+def affiche_en_tete(en_tete):
+    ncolonne = len(en_tete)
+    for i in range(ncolonne):
+        print(en_tete[i], end=' ')
+    print()
+
+
+# Affiche le plateau de jeu : en tête + grille
+def affiche_plateau(en_tete, grille):
+    affiche_en_tete(en_tete)
+    affiche_grille(grille)
 
 
 # Teste si la saisie du joueur est valide (une des valeurs de l'en-tête) : retourne l'indice de la colonne choisie
@@ -118,15 +124,8 @@ def complet(grille):
 
 # Demande au joueur si il souhaite rejouer
 def recommencer():
-    i = input('Voulez-vous rejouer ? o/n ')
-    if i in ('o','n'):
-        if i == 'o':
-            return True
-        else:
-            return False
-    else:
-        print("je n'ai pas bien compris...")
-        return recommencer()
+    return input('Voulez-vous rejouer ? o/n ') == 'o'
+
 
 # Initialise une nouvelle partie : renvoie le joueur courant et la grille vierge
 def nouvelle_partie():
@@ -170,3 +169,5 @@ while True:
     else :
         print()
         print("Cette colonne n'est pas valide !")
+        
+        
