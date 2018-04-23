@@ -3,6 +3,8 @@
 import os
 import p4online as online
 
+online.newlobby()
+
 # Définition des constantes
 LARGEURGRILLE = 7
 HAUTEURGRILLE = 6
@@ -61,6 +63,7 @@ def saisie(en_tete, case):
     else :
         print("Ce sont les", case, "qui jouent !")
         reponse = online.hisTurn()
+        return en_tete.index(reponse)
     return saisie(en_tete, case)
 
 

@@ -1,10 +1,18 @@
 import sys
 import os
+import time
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 
 status = 'h'
+if status == 'h':
+    o_last = 'g_last'
+    o_play = 'g_play'
+else:
+    o_last = "h_last"
+    o_play = "h_play"
+
 
 def init():
     # Fetch the service account key JSON file contents
@@ -41,8 +49,9 @@ def newlobby():
         if(current.child('gameOn').get()=="False"):
             current.update({"gameOn" : "True"})
             print("done")
+            myref.update({"playercount" : 1})
+            resetlobby()
             return True
-    ref.child(gameLobby).update({"playercount" : 1})
     return False
 
 #GUEST - show available lobbies to join
@@ -62,21 +71,31 @@ def resetlobby():
         whoplays = 2
     myref.update({
     "g_last" : "none",
-    "g_play" : 0,
-    "g_replay" : 0,
+    "g_play" : "0",
+    "g_replay" : "0",
     "h_last" : "none",
-    "h_play" : 0,
-    "h_replay" : 0,
+    "h_play" : "0",
+    "h_replay" : "0",
     "replayOn" : "False",
     "whoplays" : whoplays,
     "winner" : "nobody"
     })
+    global savedLp
+    savedLp = myref.child('g_last').get()
     print('done')
 
+#ANY - fetches opponent's last action from db
 def hisTurn():
-    lastPlay = myref.child('g_last').get()
-    n = myref.child('g_play').get()
+    global savedLp
+    i = 0
+    while(myref.child(o_last).get() == savedLp):
+         time.sleep(0.5)
+         sys.stdout.write("\r" +'waiting for opponent to play...'+ i*'.')
+         sys.stdout.flush()
+         i+=1
+    n = myref.child(o_play).get()
+    savedLp = myref.child(o_last).get()
+    print(n)
+    return n
 
 init()
-newlobby()
-resetlobby()
