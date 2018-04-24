@@ -8,7 +8,7 @@ online.newlobby()
 # Définition des constantes
 LARGEURGRILLE = 7
 HAUTEURGRILLE = 6
-NOMBREDECASESPOURGAGNER = 4
+NOMBREDECASESPOURGAGNER = 2
 CASEVIDE = "."
 CASEJOUEUR1 = "X"
 CASEJOUEUR2 = "O"
@@ -57,6 +57,7 @@ def saisie(en_tete, case):
         print("Ce sont les", case, "qui jouent !")
         reponse = input("Où voulez-vous jouer ? ")
         if reponse in en_tete:
+            online.myturn(reponse)
             return en_tete.index(reponse)
         else:
             print('Veuillez saisir une valeur correcte')
@@ -166,14 +167,24 @@ while True:
         affiche_plateau(en_tete, grille)
         if gain_du_jeu(grille, joueur_courant):
             print('Bravo ! Gain des', joueur_courant, '!')
-            if recommencer():
-                joueur_courant, grille = nouvelle_partie()
+            if online.recommencer():
+                if (online.checkRetry()):
+                    online.resetlobby()
+                    joueur_courant, grille = nouvelle_partie()
+                else :
+                    print('Opponent said no !')
+                    break
             else:
                 break
         elif complet(grille):
             print("Fin de la partie, personne n'a gagné !")
-            if recommencer():
-                joueur_courant, grille = nouvelle_partie()
+            if online.recommencer():
+                if (online.checkRetry()):
+                    online.resetlobby()
+                    joueur_courant, grille = nouvelle_partie()
+                else :
+                    print('Opponent said no !')
+                    break
             else:
                 break
         elif joueur_courant == CASEJOUEUR1:
