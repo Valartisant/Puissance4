@@ -1,14 +1,9 @@
-#Alternate version of the base game, for 1v1-online testing purpose
-
 import os
-import p4online as online
-
-online.newlobby()
 
 # Définition des constantes
 LARGEURGRILLE = 7
 HAUTEURGRILLE = 6
-NOMBREDECASESPOURGAGNER = 2
+NOMBREDECASESPOURGAGNER = 4
 CASEVIDE = "."
 CASEJOUEUR1 = "X"
 CASEJOUEUR2 = "O"
@@ -53,19 +48,13 @@ def affiche_plateau(en_tete, matrice):
 
 # Teste si la saisie du joueur est valide (une des valeurs de l'en-tête) : retourne l'indice de la colonne choisie
 def saisie(en_tete, case):
-    if (case == 'X'):
-        print("Ce sont les", case, "qui jouent !")
-        reponse = input("Où voulez-vous jouer ? ")
-        if reponse in en_tete:
-            online.myturn(reponse)
-            return en_tete.index(reponse)
-        else:
-            print('Veuillez saisir une valeur correcte')
-    else :
-        print("Ce sont les", case, "qui jouent !")
-        reponse = online.hisTurn()
+    print("Ce sont les", case, "qui jouent !")
+    reponse = input("Où voulez-vous jouer ? ")
+    if reponse in en_tete:
         return en_tete.index(reponse)
-    return saisie(en_tete, case)
+    else:
+        print('Veuillez saisir une valeur correcte')
+        return saisie(en_tete, case)
 
 
 # Gère la saisie du joueur : modifie la grille en fonction de la saisie du joueur, renvoie True si la grille à été
@@ -167,24 +156,14 @@ while True:
         affiche_plateau(en_tete, grille)
         if gain_du_jeu(grille, joueur_courant):
             print('Bravo ! Gain des', joueur_courant, '!')
-            if online.recommencer():
-                if (online.checkRetry()):
-                    online.resetlobby()
-                    joueur_courant, grille = nouvelle_partie()
-                else :
-                    print('Opponent said no !')
-                    break
+            if recommencer():
+                joueur_courant, grille = nouvelle_partie()
             else:
                 break
         elif complet(grille):
             print("Fin de la partie, personne n'a gagné !")
-            if online.recommencer():
-                if (online.checkRetry()):
-                    online.resetlobby()
-                    joueur_courant, grille = nouvelle_partie()
-                else :
-                    print('Opponent said no !')
-                    break
+            if recommencer():
+                joueur_courant, grille = nouvelle_partie()
             else:
                 break
         elif joueur_courant == CASEJOUEUR1:
