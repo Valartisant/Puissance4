@@ -122,24 +122,27 @@ def joinlobby():
 
 #HOST - set default values
 def resetlobby():
-    #if (input('Do you want to play first ? Y/N')=='Y'):
-    if True:
-        whoplays = 1
-    else:
-        whoplays = 2
-    myref.update({
-    "g_last" : "none",
-    "g_play" : "0",
-    "g_replay" : "0",
-    "h_last" : "none",
-    "h_play" : "0",
-    "h_replay" : "0",
-    "replayOn" : "False",
-    "whoplays" : whoplays,
-    })
-    global savedLp
-    savedLp = myref.child('g_last').get()
+    if (status=='h'):
+        #if (input('Do you want to play first ? Y/N')=='Y'):
+        if True:
+            whoplays = 1
+        else:
+            whoplays = 2
+        myref.update({
+        "g_last" : "none",
+        "g_play" : "0",
+        "g_replay" : "0",
+        "h_last" : "none",
+        "h_play" : "0",
+        "h_replay" : "0",
+        "replayOn" : "False",
+        "whoplays" : whoplays,
+        })
+        global savedLp
+        savedLp = myref.child('g_last').get()
+        return True
     print('done')
+    return False
 
 def fullReset():
     if (status=='h'):
