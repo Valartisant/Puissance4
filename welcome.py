@@ -25,3 +25,5 @@ else :
     print('ça va venir...')
     input('Press any key to continue...')
     subprocess.call("welcome.py", shell=True)
+
+#python -c "import sys; print '/usr/local/lib/python2.7/dist-packages' in sys.path"
