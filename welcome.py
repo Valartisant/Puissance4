@@ -1,5 +1,6 @@
 import subprocess
 import os
+import firebase_admin
 
 #Écran d'accueil du jeu, redirige vers les différentes versions du jeu
 
@@ -20,7 +21,8 @@ while(i not in ('1','2','3')):
 if (i == '1'):
     subprocess.call('puissance4.py', shell=True)
 elif (i=='2'):
-    subprocess.call("puissance4-o.py", shell=True)
+    #subprocess.call("puissance4-o.py", shell=True)
+    subprocess.call("test.py", shell=True)
 else :
     print('ça va venir...')
     input('Press any key to continue...')
