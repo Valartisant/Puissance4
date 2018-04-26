@@ -2,7 +2,6 @@
 
 import os
 import p4online as online
-import firebase_admin
 
 online.setStatus()
 
