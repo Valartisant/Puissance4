@@ -5,6 +5,10 @@ import os
 
 os.system('cls' if os.name == 'nt' else 'clear')
 
+import sys
+for i in sys.path :
+    print(i)
+
 print('-------------------------------------------------')
 print('-      Bienvenue sur le jeu du Puissance 4      -')
 print("-------------------------------------------------\n")
