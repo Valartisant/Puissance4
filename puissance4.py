@@ -617,6 +617,7 @@ class PartieConsole(object):
         Initialise une nouvelle partie
         """
         self._effacer_ecran()
+        print('Bienvenue dans le jeu du puissance 4 !')
 
         nbre_joueurs_humains = self._demander_nbre_joueurs()
 
@@ -665,7 +666,6 @@ class PartieConsole(object):
         """
         Lance une partie entre les deux joueurs
         """
-        print('Bienvenue dans le jeu du puissance 4 !')
         self._nouvelle_partie()
 
         while True:
