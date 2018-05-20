@@ -646,6 +646,9 @@ class PartieConsole(object):
         elif nbre_joueurs_humains == 2:
             nom1 = input('Pseudo du joueur 1 ?')
             nom2 = input('Pseudo du joueur 2 ?')
+            while nom1 == nom2:
+                print('Le nom du joueur 2 doit être différent de celui du joueur 1 !')
+                nom2 = input('Pseudo du joueur 2 ?')
             self._joueur1 = JoueurHumain(self._jeu, nom1, PION_JOUEUR_1)
             self._joueur2 = JoueurHumain(self._jeu, nom2, PION_JOUEUR_2)
 
