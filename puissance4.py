@@ -116,7 +116,6 @@ class Grille(object):
     def vider_case(self, ligne, colonne):
         """
         Place la valeur par défaut en [ligne][colonne] dans la grille
-
         :param ligne:
         :param colonne:
         """
@@ -365,11 +364,11 @@ class Jeu(object):
                 colonnes_jouables.append(colonne)
         return colonnes_jouables
 
-    def nbre_cases_alignees_pion(self, pion):
+    def nbre_cases_alignees_pion(self, pion, possibilite_gain=False):
         """
         Détermination du nombre maximal de pions alignés
-
         :param pion: pion pour lequel il faut chercher les alignements
+        :param possibilite_gain: True -> renvoie le plus grand nombre de cases alignées avec possibilité de gain
         :return: entier
         """
         nbre_max = 0
@@ -382,9 +381,10 @@ class Jeu(object):
                 valeur_case = self._grille.valeur(ligne, colonne)
 
                 if valeur_case != pion:
-                    if nb > nbre_max:
-                        nbre_max = nb
-                    nb = 0
+                    if not possibilite_gain or (possibilite_gain and valeur_case == CASE_VIDE):
+                        if nb > nbre_max:
+                            nbre_max = nb
+                        nb = 0
                 else:
                     nb += 1
 
@@ -399,9 +399,10 @@ class Jeu(object):
                 valeur_case = self._grille.valeur(ligne, colonne)
 
                 if valeur_case != pion:
-                    if nb > nbre_max:
-                        nbre_max = nb
-                    nb = 0
+                    if not possibilite_gain or (possibilite_gain and valeur_case == CASE_VIDE):
+                        if nb > nbre_max:
+                            nbre_max = nb
+                        nb = 0
                 else:
                     nb += 1
 
@@ -421,9 +422,10 @@ class Jeu(object):
             valeur_case = self._grille.valeur(ligne, colonne)
 
             if valeur_case != pion:
-                if nb > nbre_max:
-                    nbre_max = nb
-                nb = 0
+                if not possibilite_gain or (possibilite_gain and valeur_case == CASE_VIDE):
+                    if nb > nbre_max:
+                        nbre_max = nb
+                    nb = 0
             else:
                 nb += 1
 
@@ -446,9 +448,10 @@ class Jeu(object):
             valeur_case = self._grille.valeur(ligne, colonne)
 
             if valeur_case != pion:
-                if nb > nbre_max:
-                    nbre_max = nb
-                nb = 0
+                if not possibilite_gain or (possibilite_gain and valeur_case == CASE_VIDE):
+                    if nb > nbre_max:
+                        nbre_max = nb
+                    nb = 0
             else:
                 nb += 1
 
@@ -478,9 +481,10 @@ class Jeu(object):
             valeur_case = self._grille.valeur(ligne, colonne)
 
             if valeur_case != pion:
-                if nb > nbre_max:
-                    nbre_max = nb
-                nb = 0
+                if not possibilite_gain or (possibilite_gain and valeur_case == CASE_VIDE):
+                    if nb > nbre_max:
+                        nbre_max = nb
+                    nb = 0
             else:
                 nb += 1
 
@@ -503,9 +507,10 @@ class Jeu(object):
             valeur_case = self._grille.valeur(ligne, colonne)
 
             if valeur_case != pion:
-                if nb > nbre_max:
-                    nbre_max = nb
-                nb = 0
+                if not possibilite_gain or (possibilite_gain and valeur_case == CASE_VIDE):
+                    if nb > nbre_max:
+                        nbre_max = nb
+                    nb = 0
             else:
                 nb += 1
 
@@ -535,7 +540,6 @@ class JoueurHumain(object):
     def choix(self):
         """
         Demande un numéro de colonne à l'utilisateur et renvoie ce numéro si la colonne est jouable, -1 pour arrêter
-
         :return: numéro de colonne (int) ou -1 pour quitter la partie
         """
         while True:
@@ -623,14 +627,21 @@ class PartieConsole(object):
 
         if nbre_joueurs_humains == 0:
             profondeur = self._demander_profondeur_ia()
-            self._joueur1 = IAMinMax(self._jeu, 'MinMax1', PION_JOUEUR_1, PION_JOUEUR_2, profondeur)
-            self._joueur2 = IAMinMax(self._jeu, 'MinMax2', PION_JOUEUR_2, PION_JOUEUR_1, profondeur)
+            if profondeur != -1:
+                self._joueur1 = IAMinMax(self._jeu, 'MinMax1', PION_JOUEUR_1, PION_JOUEUR_2, profondeur)
+                self._joueur2 = IAMinMax(self._jeu, 'MinMax2', PION_JOUEUR_2, PION_JOUEUR_1, profondeur)
+            else:
+                self._joueur1 = IaAleatoire(self._jeu, 'Random1', PION_JOUEUR_1)
+                self._joueur2 = IaAleatoire(self._jeu, 'Random2', PION_JOUEUR_2)
 
         elif nbre_joueurs_humains == 1:
             nom = input('Pseudo du joueur ?')
             profondeur = self._demander_profondeur_ia()
             self._joueur1 = JoueurHumain(self._jeu, nom, PION_JOUEUR_1)
-            self._joueur2 = IAMinMax(self._jeu, 'MinMax1', PION_JOUEUR_2, PION_JOUEUR_1, profondeur)
+            if profondeur != -1:
+                self._joueur2 = IAMinMax(self._jeu, 'MinMax', PION_JOUEUR_2, PION_JOUEUR_1, profondeur)
+            else:
+                self._joueur2 = IaAleatoire(self._jeu, 'Random', PION_JOUEUR_2)
 
         elif nbre_joueurs_humains == 2:
             nom1 = input('Pseudo du joueur 1 ?')
@@ -644,6 +655,10 @@ class PartieConsole(object):
         self._affiche_plateau()
 
     def _demander_nbre_joueurs(self):
+        """
+        Demande le nombre de joueurs humains à l'utilisateur
+        :return: entier compris entre 0 et 2
+        """
         while True:
             try:
                 nbre_joueurs_humains = int(input('Nombre de joueurs humains (0/1/2) ?'))
@@ -654,9 +669,13 @@ class PartieConsole(object):
                     return nbre_joueurs_humains
 
     def _demander_profondeur_ia(self):
+        """
+        Demande la difficulté de l'IA à l'utilisateur (correspond à la profondeur de recherche des coups)
+        :return: entier (-1 pour l'IA aléatoire, positif ou nulle pour MinMAx)
+        """
         while True:
             try:
-                profondeur = int(input("Difficulté de l'IA (0-5) ?"))
+                profondeur = int(input("Difficulté de l'IA (0-5), (-1) pour une IA aléatoire ?"))
             except ValueError:
                 pass
             else:
@@ -707,7 +726,6 @@ class PartieConsole(object):
 class IAMinMax(object):
     def __init__(self, jeu, nom, pion, pion_adversaire, profondeur=1, utilisation_alpha_beta=True):
         """
-
         :param jeu:
         :param nom:
         :param pion:
@@ -738,9 +756,7 @@ class IAMinMax(object):
     def _choix_minmax(self):
         """"
         Détermine le meilleur coup possible pour l'IA
-
         Cette méthode n'est appelée qui s'il y a au moins un coup jouable pour l'IA
-
         :return: colonne jouée
         """
         # Il faut retenir le coup qui donnera le score maximal pour l'IA.
@@ -773,9 +789,7 @@ class IAMinMax(object):
     def _choix_alpha_beta(self):
         """"
         Détermine le meilleur coup possible pour l'IA
-
         Cette méthode n'est appelée qui s'il y a au moins un coup jouable pour l'IA
-
         :return: colonne jouée
         """
         alpha = -self._score_max
@@ -817,9 +831,7 @@ class IAMinMax(object):
         """
         Simulation des coups possibles pour l'adversaire
         If faut retenir le score minimal du point de vue de l'IA
-
         C'est la fonction "min" de l'algorithme minmax
-
         :param profondeur: profondeur maximale de recherche des coups
         :return: score obtenu le plus défavorable du point de vue de l'IA
         """
@@ -847,9 +859,7 @@ class IAMinMax(object):
         """
         Simulation des coups possibles pour l'IA
         If faut retenir le score maximal du point de vue de l'IA
-
         C'est la fonction "max" de l'algorithme minmax
-
         :param profondeur: profondeur maximale de recherche des coups
         :return: score obtenu le plus favorable du point de vue de l'IA
         """
@@ -877,9 +887,7 @@ class IAMinMax(object):
         """
         Simulation des coups possibles pour l'adversaire
         If faut retenir le score minimal du point de vue de l'IA
-
         C'est la fonction "min" de l'algorithme minmax
-
         :param profondeur: profondeur maximale de recherche des coups
         :param alpha: valeur minimale que l'IA peut espérer obtenir en jouant le coup
         :param beta: valeur maximale que l'IA peut espérer obtenir en jouant le coup
@@ -914,9 +922,7 @@ class IAMinMax(object):
         """
         Simulation des coups possibles pour l'IA
         If faut retenir le score maximal du point de vue de l'IA
-
         C'est la fonction "max" de l'algorithme minmax
-
         :param profondeur: profondeur maximale de recherche des coups
         :param alpha: valeur minimale que l'IA peut espérer obtenir en jouant le coup
         :param beta: valeur maximale que l'IA peut espérer obtenir en jouant le coup
@@ -950,7 +956,6 @@ class IAMinMax(object):
     def _evaluer_score(self, pion):
         """
         Calcul une évaluation de la situation du jeu du point de vue de l'IA
-
         :param pion: c'est le dernier pion qui a été joué
         :return: un entier compris entre -score_max et +score_max
         """
@@ -968,14 +973,14 @@ class IAMinMax(object):
 
         # évaluation de la situation du point de vue de l'IA
 
-        # on calcul le nombre maximal de cases alignées pour l'Ia et l'adversaire
-        nbre_pions_alignes_ia = self._jeu.nbre_cases_alignees_pion(self.pion)
-        nb_pions_alignes_adversaire = self._jeu.nbre_cases_alignees_pion(self._pion_adversaire)
+        # on calcule le nombre maximal de cases alignées pour l'Ia et l'adversaire
+        nbre_pions_alignes_ia = self._jeu.nbre_cases_alignees_pion(self.pion, True)
+        nbre_pions_alignes_adversaire = self._jeu.nbre_cases_alignees_pion(self._pion_adversaire, True)
 
-        # on calcul le score pour chaque joueur (arrondi à l'entier inférieur) tel que la différence reste comprise
+        # on calcule le score pour chaque joueur (arrondi à l'entier inférieur) tel que la différence reste comprise
         # entre -score_max et score_max
         score_ia = nbre_pions_alignes_ia * self._score_max // (2 * self._jeu.nbre_cases_gain)
-        score_adversaire = nb_pions_alignes_adversaire * self._score_max // (2 * self._jeu.nbre_cases_gain)
+        score_adversaire = nbre_pions_alignes_adversaire * self._score_max // (2 * self._jeu.nbre_cases_gain)
 
         # le score relatif pour l'IA est la différence
         return score_ia - score_adversaire
