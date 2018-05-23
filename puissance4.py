@@ -364,54 +364,62 @@ class Jeu(object):
                 colonnes_jouables.append(colonne)
         return colonnes_jouables
 
-    def nbre_cases_alignees_pion(self, pion, possibilite_gain=False):
+    def nbre_cases_alignees_pion(self, pion):
         """
         Détermination du nombre maximal de pions alignés
         :param pion: pion pour lequel il faut chercher les alignements
-        :param possibilite_gain: True -> renvoie le plus grand nombre de cases alignées avec possibilité de gain
         :return: entier
         """
         nbre_max = 0
 
         # ----------------------------------------------------------------------------------------------------------------------------
         # lignes horizontales
-        nb = 0
+        nb_cases_alignement = 0
+        case_vide_debut_alignement = False
+
         for ligne in range(self._grille.nbre_lignes):
             for colonne in range(self._grille.nbre_colonnes):
                 valeur_case = self._grille.valeur(ligne, colonne)
 
                 if valeur_case != pion:
-                    if not possibilite_gain or (possibilite_gain and valeur_case == CASE_VIDE):
-                        if nb > nbre_max:
-                            nbre_max = nb
-                        nb = 0
-                else:
-                    nb += 1
+                    case_vide_fin_alignement = valeur_case == CASE_VIDE
 
-        if nb > nbre_max:
-            nbre_max = nb
+                    if nb_cases_alignement > nbre_max and case_vide_fin_alignement:
+                        nbre_max = nb_cases_alignement
+
+                    nb_cases_alignement = 0
+                    case_vide_debut_alignement = case_vide_fin_alignement
+                else:
+                    nb_cases_alignement += 1
+                    if nb_cases_alignement > nbre_max and case_vide_debut_alignement:
+                        nbre_max = nb_cases_alignement
 
         # ----------------------------------------------------------------------------------------------------------------------------
         # lignes verticales
-        nb = 0
+        nb_cases_alignement = 0
+        case_vide_debut_alignement = False
+
         for colonne in range(self._grille.nbre_colonnes):
             for ligne in range(self._grille.nbre_lignes):
                 valeur_case = self._grille.valeur(ligne, colonne)
 
                 if valeur_case != pion:
-                    if not possibilite_gain or (possibilite_gain and valeur_case == CASE_VIDE):
-                        if nb > nbre_max:
-                            nbre_max = nb
-                        nb = 0
-                else:
-                    nb += 1
+                    case_vide_fin_alignement = valeur_case == CASE_VIDE
 
-        if nb > nbre_max:
-            nbre_max = nb
+                    if nb_cases_alignement > nbre_max and case_vide_fin_alignement:
+                        nbre_max = nb_cases_alignement
+
+                    nb_cases_alignement = 0
+                    case_vide_debut_alignement = case_vide_fin_alignement
+                else:
+                    nb_cases_alignement += 1
+                    if nb_cases_alignement > nbre_max and case_vide_debut_alignement:
+                        nbre_max = nb_cases_alignement
 
         # ----------------------------------------------------------------------------------------------------------------------------
         # diagonales /
-        nb = 0
+        nb_cases_alignement = 0
+        case_vide_debut_alignement = False
 
         ligne_depart = 0
         colonne_depart = 0
@@ -422,12 +430,17 @@ class Jeu(object):
             valeur_case = self._grille.valeur(ligne, colonne)
 
             if valeur_case != pion:
-                if not possibilite_gain or (possibilite_gain and valeur_case == CASE_VIDE):
-                    if nb > nbre_max:
-                        nbre_max = nb
-                    nb = 0
+                case_vide_fin_alignement = valeur_case == CASE_VIDE
+
+                if nb_cases_alignement > nbre_max and case_vide_fin_alignement:
+                    nbre_max = nb_cases_alignement
+
+                nb_cases_alignement = 0
+                case_vide_debut_alignement = case_vide_fin_alignement
             else:
-                nb += 1
+                nb_cases_alignement += 1
+                if nb_cases_alignement > nbre_max and case_vide_debut_alignement:
+                    nbre_max = nb_cases_alignement
 
             if ligne > 0 and colonne < self._grille.nbre_colonnes - 1:
                 ligne -= 1
@@ -448,12 +461,17 @@ class Jeu(object):
             valeur_case = self._grille.valeur(ligne, colonne)
 
             if valeur_case != pion:
-                if not possibilite_gain or (possibilite_gain and valeur_case == CASE_VIDE):
-                    if nb > nbre_max:
-                        nbre_max = nb
-                    nb = 0
+                case_vide_fin_alignement = valeur_case == CASE_VIDE
+
+                if nb_cases_alignement > nbre_max and case_vide_fin_alignement:
+                    nbre_max = nb_cases_alignement
+
+                nb_cases_alignement = 0
+                case_vide_debut_alignement = case_vide_fin_alignement
             else:
-                nb += 1
+                nb_cases_alignement += 1
+                if nb_cases_alignement > nbre_max and case_vide_debut_alignement:
+                    nbre_max = nb_cases_alignement
 
             if ligne > 0 and colonne < self._grille.nbre_colonnes - 1:
                 ligne -= 1
@@ -465,12 +483,10 @@ class Jeu(object):
                 ligne = ligne_depart
                 colonne = colonne_depart
 
-        if nb > nbre_max:
-            nbre_max = nb
-
         # ----------------------------------------------------------------------------------------------------------------------------
         # diagonales \
-        nb = 0
+        nb_cases_alignement = 0
+        case_vide_debut_alignement = False
 
         ligne_depart = 0
         colonne_depart = self._grille.nbre_colonnes - 1
@@ -481,12 +497,17 @@ class Jeu(object):
             valeur_case = self._grille.valeur(ligne, colonne)
 
             if valeur_case != pion:
-                if not possibilite_gain or (possibilite_gain and valeur_case == CASE_VIDE):
-                    if nb > nbre_max:
-                        nbre_max = nb
-                    nb = 0
+                case_vide_fin_alignement = valeur_case == CASE_VIDE
+
+                if nb_cases_alignement > nbre_max and case_vide_fin_alignement:
+                    nbre_max = nb_cases_alignement
+
+                nb_cases_alignement = 0
+                case_vide_debut_alignement = case_vide_fin_alignement
             else:
-                nb += 1
+                nb_cases_alignement += 1
+                if nb_cases_alignement > nbre_max and case_vide_debut_alignement:
+                    nbre_max = nb_cases_alignement
 
             if ligne > 0 and colonne > 0:
                 ligne -= 1
@@ -507,12 +528,17 @@ class Jeu(object):
             valeur_case = self._grille.valeur(ligne, colonne)
 
             if valeur_case != pion:
-                if not possibilite_gain or (possibilite_gain and valeur_case == CASE_VIDE):
-                    if nb > nbre_max:
-                        nbre_max = nb
-                    nb = 0
+                case_vide_fin_alignement = valeur_case == CASE_VIDE
+
+                if nb_cases_alignement > nbre_max and case_vide_fin_alignement:
+                    nbre_max = nb_cases_alignement
+
+                nb_cases_alignement = 0
+                case_vide_debut_alignement = case_vide_fin_alignement
             else:
-                nb += 1
+                nb_cases_alignement += 1
+                if nb_cases_alignement > nbre_max and case_vide_debut_alignement:
+                    nbre_max = nb_cases_alignement
 
             if ligne > 0 and colonne > 0:
                 ligne -= 1
@@ -523,9 +549,6 @@ class Jeu(object):
                     break
                 ligne = ligne_depart
                 colonne = colonne_depart
-
-        if nb > nbre_max:
-            nbre_max = nb
 
         return nbre_max
 
@@ -636,6 +659,9 @@ class PartieConsole(object):
 
         elif nbre_joueurs_humains == 1:
             nom = input('Pseudo du joueur ?')
+            while nom == 'Minmax' or nom == 'Random':
+                print('Le nom du joueur doit être différent de "Minmax" ou "Random" !')
+                nom = input('Pseudo du joueur ?')
             profondeur = self._demander_profondeur_ia()
             self._joueur1 = JoueurHumain(self._jeu, nom, PION_JOUEUR_1)
             if profondeur != -1:
@@ -680,7 +706,7 @@ class PartieConsole(object):
             try:
                 profondeur = int(input("Difficulté de l'IA (0-5), (-1) pour une IA aléatoire ?"))
             except ValueError:
-                pass
+                print('Veuillez saisir un nombre entier !')
             else:
                 return profondeur
 
@@ -843,7 +869,7 @@ class IAMinMax(object):
         if profondeur <= 0 or self._jeu.fini:
             return self._evaluer_score(self.pion)
 
-        # On va simuler les coups possible de l'adversaire en réponse au dernier coup joué par l'IA
+        # On va simuler les coups possibles de l'adversaire en réponse au dernier coup joué par l'IA
         # On va retenir le score minimal obtenu en évaluant la situation du point de vue de l'IA
         # On va donc récupérer la pire situation dans laquelle va se trouver l'IA suite au coup de l'adversaire
         score_min = self._score_max
@@ -977,8 +1003,8 @@ class IAMinMax(object):
         # évaluation de la situation du point de vue de l'IA
 
         # on calcule le nombre maximal de cases alignées pour l'Ia et l'adversaire
-        nbre_pions_alignes_ia = self._jeu.nbre_cases_alignees_pion(self.pion, True)
-        nbre_pions_alignes_adversaire = self._jeu.nbre_cases_alignees_pion(self._pion_adversaire, True)
+        nbre_pions_alignes_ia = self._jeu.nbre_cases_alignees_pion(self.pion)
+        nbre_pions_alignes_adversaire = self._jeu.nbre_cases_alignees_pion(self._pion_adversaire)
 
         # on calcule le score pour chaque joueur (arrondi à l'entier inférieur) tel que la différence reste comprise
         # entre -score_max et score_max
