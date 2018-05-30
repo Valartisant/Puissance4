@@ -57,16 +57,25 @@ def affiche_plateau(en_tete, matrice):
 def saisie(en_tete, case):
     if (case == 'X'):
         print("Ce sont les", case, "qui jouent !")
-        reponse = input("Où voulez-vous jouer ? ")
+        reponse = input("Où voulez-vous jouer ? (\'exit\' pour quitter)")
         if reponse in en_tete:
             online.myturn(reponse)
             return en_tete.index(reponse)
+        elif reponse == 'exit':
+            online.myturn(reponse)
+            import welcome
         else:
             print('Veuillez saisir une valeur correcte')
     else :
         print("Ce sont les", case, "qui jouent !")
         reponse = online.hisTurn()
-        return en_tete.index(reponse)
+        if(reponse=='exit'):
+            print("L'adversaire a abandonné la partie.")
+            input("-- press any key --")
+            import welcome
+            exit()
+        else :
+            return en_tete.index(reponse)
     return saisie(en_tete, case)
 
 

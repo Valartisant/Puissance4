@@ -8,9 +8,15 @@ from firebase_admin import db
 
 #status = 'h'
 
+nameList = ["VAL", "THMS", "CHRISTOPHE"] #Easter-Egg - si le nom entré par le joueur figure dans cette liste, il est remplacé par un nom de altName
+altName = ["Valartisant", "Lalicorne", "22"]
+
+sName = "sName"
 
 
 def init():
+    oppName = "none"
+    selfName = "none"
     # Fetch the service account key JSON file contents
     path = os.path.join(sys.path[0], 'service-account-credentials.json')
 
@@ -49,22 +55,26 @@ def setStatus():
 
 #ANY - Set vars based on status
 def varSet(status):
-    global o_last, o_play, o_replay
-    global s_last, s_play, s_replay
+    global o_last, o_play, o_replay, o_name
+    global s_last, s_play, s_replay, s_name
     if status == 'h':
         o_last = 'g_last'
         o_play = 'g_play'
         o_replay = 'g_replay'
+        o_name='g_name'
         s_last='h_last'
         s_play='h_play'
         s_replay='h_replay'
+        s_name='h_name'
     else:
         o_last = "h_last"
         o_play = "h_play"
         o_replay='h_replay'
+        o_name='h_name'
         s_last='g_last'
         s_play='g_play'
         s_replay='g_replay'
+        s_name='g_name'
     return True
 
 #HOST - create lobby
@@ -81,7 +91,9 @@ def newlobby():
                 print("done")
                 myref.update({"playercount" : 1})
                 resetlobby()
+                getName()
                 wait()
+
                 return True
         print('No available lobby. Try to join one, or try again later.')
         input('press any key to continue...')
@@ -94,7 +106,7 @@ def wait():
     i = 0
     while (myref.child('playercount').get()!=2):
         if(i!=40):
-            ime.sleep(0.5)
+            time.sleep(0.5)
             sys.stdout.write("\r" +'waiting for opponent to join...'+ i*'.')
             sys.stdout.flush()
             i+=1
@@ -103,7 +115,7 @@ def wait():
             n = ""
             while(n not in ('o','n')):
                 n = input('Voulez-vous continuer d\'attendre ? o/n ')
-            if n = 'o':
+            if n == 'o':
                 wait()
             else :
                 subprocess.call("welcome.py", shell=True)
@@ -119,7 +131,7 @@ def showlobbies():
     if (len(currentGames) == 0):
         print('no games. You can create a game, instead.')
         input('press any key to go back...')
-        subprocess.call('puissance4-o.py', shell=True)
+        subprocess.call('puissance4o.py', shell=True)
     print(currentGames)
 
 #GUEST - join a lobby
@@ -170,7 +182,9 @@ def fullReset():
         "g_last" : "none",
         "g_play" : "0",
         "g_replay" : "0",
+        "g_name" : "gname",
         "h_last" : "none",
+        "h_name" : "hname",
         "gameOn" : "False",
         "h_play" : "0",
         "h_replay" : "0",
@@ -179,6 +193,25 @@ def fullReset():
         "playercount" : 0
         })
     print('done')
+
+#ANY - asks for player's name
+def getName():
+    name = input("Quel est votre nom ? \n\n >>")
+    if name.upper() in nameList:
+        name = altName[nameList.index(name.upper())]
+    i = input("Vous vous appelez "+name+" c'est bien ça ? [o/n] \n\n>>")
+    while (i not in ("o","n")):
+        i = input("Je n'ai pas bien compris... \n\n>>")
+    if (i=="o"):
+        myref.update({s_name: name})
+        global sName
+        sName = name
+    else :
+        getName()
+
+#ANY - Fetch Opponent's name
+def oppName():
+    return myref.child(o_name).get()
 
 #ANY - fetches opponent's last action from db
 def hisTurn():
@@ -193,11 +226,13 @@ def hisTurn():
     savedLp = myref.child(o_last).get()
     print(n)
     return n
+
 #ANY - Handles action of player and sends it to server
 def myturn(n):
     myref.update({s_play : n})
     myref.update({s_last : time.time()})
     return True
+
 #ANY - Says if player wants to replay
 def recommencer():
     i = input('Voulez-vous rejouer ? o/n ')
