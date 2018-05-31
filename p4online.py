@@ -91,7 +91,7 @@ def newlobby():
                 print("done")
                 myref.update({"playercount" : 1})
                 resetlobby()
-                getName()
+                getName(True)
                 wait()
 
                 return True
@@ -146,6 +146,7 @@ def joinlobby():
         lobby = 'lobby'+i
         global myref
         myref = ref.child(lobby)
+        getName(True)
         myref.update ({'playercount' : 2})
         global savedLp
         savedLp = myref.child('h_last').get()
