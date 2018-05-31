@@ -685,7 +685,6 @@ class PartieConsole(object):
                 print('Bravo', self._joueur_courant.nom, '! Tu as gagné !')
                 if online.recommencer():
                     if (online.checkRetry()):
-                        online.resetlobby()
                         self._nouvelle_partie()
                     else:
                         print('Opponent said no !')
