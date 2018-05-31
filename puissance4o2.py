@@ -586,7 +586,7 @@ class JoueurHumain(object):
                 except ValueError:
                     if reponse.upper() == 'EXIT':
                         online.myturn(reponse)
-                        online.fullReset()
+                        #online.fullReset()
                         return -1
                 else:
                     if reponse in self._jeu.colonnes_jouables:
