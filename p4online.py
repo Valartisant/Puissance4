@@ -210,7 +210,7 @@ def getName(pushAfter):
         if pushAfter:
             pushName()
     else:
-        getName()
+        getName(pushAfter)
 
 #ANY - pushes player's name to server
 def pushName():
