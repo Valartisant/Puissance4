@@ -180,14 +180,14 @@ def resetlobby():
 def fullReset():
     if (status=='h'):
         myref.update({
-        "g_last" : "none",
-        "g_play" : "0",
+        #"g_last" : "none",
+        #"g_play" : "0",
         "g_replay" : "0",
         "g_name" : "gname",
-        "h_last" : "none",
+        #"h_last" : "none",
         "h_name" : "hname",
         "gameOn" : "False",
-        "h_play" : "0",
+        #"h_play" : "0",
         "h_replay" : "0",
         "replayOn" : "False",
         "whoplays" : "none",
@@ -214,8 +214,6 @@ def getName(pushAfter):
 
 #ANY - pushes player's name to server
 def pushName():
-
-    i = input("Vous vous appelez "+sName+" c'est bien ça ? [o/n] \n\n>>")
     while (i not in ("o","n")):
         i = input("Je n'ai pas bien compris... \n\n>>")
     if (i=="o"):
