@@ -15,7 +15,7 @@ i = 0
 while(i not in ('1','2','3','exit')):
     if (i !=0 and i not in ('1','2','3')):
         print('Je n\'ai pas bien compris...')
-    i = input(' [1] 1v1 local\n [2] 1v1 en ligne\n [3] Contre l\'IA\n [exit] Quitter le jeu\n\n >>')
+    i = input(' [1] 1v1 local\n [2] 1v1 en ligne\n [exit] Quitter le jeu\n\n >>')
 
 
 if (i == '1'):
