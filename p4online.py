@@ -8,8 +8,8 @@ from firebase_admin import db
 
 #status = 'h'
 
-nameList = ["VAL", "THMS", "CHRISTOPHE"] #Easter-Egg - si le nom entré par le joueur figure dans cette liste, il est remplacé par un nom de altName
-altName = ["Valartisant", "Lalicorne", "22"]
+nameList = ["VAL", "THMS", "CHRISTOPHE", "LUDOVIC"] #Easter-Egg - si le nom entré par le joueur figure dans cette liste, il est remplacé par un nom de altName
+altName = ["Valartisant", "Lalicorne", "Mr. Durant", "Mr. Rion"]
 
 sName = "sName"
 
@@ -195,19 +195,32 @@ def fullReset():
     print('done')
 
 #ANY - asks for player's name
-def getName():
+def getName(pushAfter):
     name = input("Quel est votre nom ? \n\n >>")
     if name.upper() in nameList:
         name = altName[nameList.index(name.upper())]
-    i = input("Vous vous appelez "+name+" c'est bien ça ? [o/n] \n\n>>")
+    i = input("Vous vous appelez " + name + " c'est bien ça ? [o/n] \n\n>>")
+    while (i not in ("o","n")):
+        i = input("Je n'ai pas bien compris... \n\n>>")
+    if i == "o":
+        print("Bien reçu !")
+        global sName
+        sName = name
+        if pushAfter:
+            pushName()
+    else:
+        getName()
+
+#ANY - pushes player's name to server
+def pushName():
+
+    i = input("Vous vous appelez "+sName+" c'est bien ça ? [o/n] \n\n>>")
     while (i not in ("o","n")):
         i = input("Je n'ai pas bien compris... \n\n>>")
     if (i=="o"):
-        myref.update({s_name: name})
-        global sName
-        sName = name
+        myref.update({s_name: sName})
     else :
-        getName()
+        getName(True)
 
 #ANY - Fetch Opponent's name
 def oppName():

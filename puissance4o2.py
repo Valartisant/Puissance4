@@ -575,7 +575,7 @@ class JoueurHumain(object):
             try:
                 reponse=int(reponse)
             except ValueError:
-                if reponse.capitalize() =="EXIT":
+                if reponse.upper() =="EXIT":
                     return -1
             return reponse
         else:
@@ -584,7 +584,7 @@ class JoueurHumain(object):
                 try:
                     reponse = int(reponse)
                 except ValueError:
-                    if reponse.capitalize() == 'EXIT':
+                    if reponse.upper() == 'EXIT':
                         online.myturn(reponse)
                         online.fullReset()
                         return -1
