@@ -214,12 +214,7 @@ def getName(pushAfter):
 
 #ANY - pushes player's name to server
 def pushName():
-    while (i not in ("o","n")):
-        i = input("Je n'ai pas bien compris... \n\n>>")
-    if (i=="o"):
-        myref.update({s_name: sName})
-    else :
-        getName(True)
+    myref.update({s_name: sName})
 
 #ANY - Fetch Opponent's name
 def oppName():
