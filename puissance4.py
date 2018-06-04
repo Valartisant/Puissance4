@@ -708,7 +708,7 @@ class PartieConsole(object):
             except ValueError:
                 print('Veuillez saisir un nombre entier !')
             else:
-                if profondeur <= -1:
+                if profondeur < -1:
                     print('Veuillez saisir une valeur correcte !')
                     return self._demander_profondeur_ia()
                 else:
