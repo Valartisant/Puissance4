@@ -157,8 +157,13 @@ def joinlobby():
     screenClear()
     print("Open lobbies :")
     showlobbies()
-    i = input("which one you join ? Enter number : ")
-    if (i not in ('1','2','3')):
+    i = input("which one you join ? Enter number (exit to quit): ")
+    if i.upper()=="EXIT":
+        subprocess.call("launch.bat", shell=True)
+        status=""
+        exit()
+        return False
+    elif (i not in ('1','2','3')):
         print("invalid lobby")
         time.sleep(2)
         joinlobby()
@@ -185,10 +190,12 @@ def joinlobby():
 def resetlobby():
     if (status=='h'):
         #if (input('Do you want to play first ? Y/N')=='Y'):
+        '''
         if True:
             whoplays = 1
         else:
             whoplays = 2
+        '''
         myref.update({
         "g_last" : "none",
         "g_play" : "0",
@@ -197,7 +204,7 @@ def resetlobby():
         "h_play" : "0",
         "h_replay" : "0",
         "replayOn" : "False",
-        "whoplays" : whoplays,
+        #"whoplays" : whoplays,
         })
         global savedLp
         savedLp = myref.child('g_last').get()

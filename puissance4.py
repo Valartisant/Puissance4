@@ -1,5 +1,6 @@
 import os
 from random import randrange
+import subprocess
 
 
 # Définition des constantes
@@ -727,6 +728,7 @@ class PartieConsole(object):
             # choix d'un emplacement de jeu par le joueur
             choix = self._joueur_courant.choix()
             if choix == -1:
+                subprocess.call("launch.bat", shell=True)
                 break
 
             # on joue le coup
