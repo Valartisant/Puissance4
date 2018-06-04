@@ -18,44 +18,48 @@ firebase_admin.initialize_app(cred, {
 global ref
 ref = db.reference("/1v1-online")
 
-ref.update({
-    "lobby1" : {
-      "g_last" : "none",
-      "g_play" : "0",
-      "g_replay" : "0",
-      "gameOn" : "False",
-      "h_last" : "none",
-      "h_play" : "0",
-      "h_replay" : "0",
-      "playercount" : 0,
-      "replayOn" : "False",
-      "whoplays" : "none",
-      "winner" : "nobody"
-    },
-    "lobby2" : {
-      "g_last" : "none",
-      "g_play" : "0",
-      "g_replay" : "0",
-      "gameOn" : "False",
-      "h_last" : "none",
-      "h_play" : "0",
-      "h_replay" : "0",
-      "playercount" : 0,
-      "replayOn" : "False",
-      "whoplays" : "none",
-      "winner" : "nobody"
-    },
-    "lobby3" : {
-      "g_last" : "none",
-      "g_play" : "0",
-      "g_replay" : "0",
-      "gameOn" : "False",
-      "h_last" : "none",
-      "h_play" : "0",
-      "h_replay" : "0",
-      "playercount" : 0,
-      "replayOn" : "False",
-      "whoplays" : "none",
-      "winner" : "nobody"
-    }
-})
+def reset():
+  ref.update({
+      "lobby1" : {
+        "g_last" : "none",
+        "g_play" : "0",
+        "g_name" : "gname",
+        "h_name": "hname",
+        "g_replay" : "0",
+        "gameOn" : "False",
+        "h_last" : "none",
+        "h_play" : "0",
+        "h_replay" : "0",
+        "playercount" : 0,
+        "replayOn" : "False"
+      },
+      "lobby2" : {
+        "g_name": "gname",
+        "h_name": "hname",
+        "g_last" : "none",
+        "g_play" : "0",
+        "g_replay" : "0",
+        "gameOn" : "False",
+        "h_last" : "none",
+        "h_play" : "0",
+        "h_replay" : "0",
+        "playercount" : 0,
+        "replayOn" : "False"
+      },
+      "lobby3" : {
+        "g_name": "gname",
+        "h_name": "hname",
+        "g_last" : "none",
+        "g_play" : "0",
+        "g_replay" : "0",
+        "gameOn" : "False",
+        "h_last" : "none",
+        "h_play" : "0",
+        "h_replay" : "0",
+        "playercount" : 0,
+        "replayOn" : "False"
+      }
+  })
+  print("done")
+
+reset()

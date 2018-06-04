@@ -37,6 +37,13 @@ ref = db.reference('/test')
 str = ref.get()
 print(str)
 '''
+
+def screenClear():
+    """
+    Efface la console (1ère commande pour windows, 2ème pour linux)
+    """
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 #ANY - asks if player wants to create or join, and sets status
 def setStatus():
     print('Que Voulez-vous faire ?\n')
@@ -91,7 +98,7 @@ def newlobby():
                 print("done")
                 myref.update({"playercount" : 1})
                 resetlobby()
-                getName(True)
+                getName()
                 wait()
 
                 return True
@@ -107,7 +114,8 @@ def wait():
     while (myref.child('playercount').get()!=2):
         if(i!=40):
             time.sleep(0.5)
-            sys.stdout.write("\r" +'waiting for opponent to join...'+ i*'.')
+            #sys.stdout.write("\r" +'waiting for opponent to join...'+ (i/3)*'.')
+            sys.stdout.write("\r" + 'waiting for opponent to join.' + (i % 3) * '.' + (16 - (i % 4)) * ' ')
             sys.stdout.flush()
             i+=1
         else :
@@ -123,11 +131,15 @@ def wait():
 
 #GUEST - show available lobbies to join
 def showlobbies():
+    global currentGames
     currentGames = []
+    gameList=[]
     lobbylist = ref.get()
     for lobby in lobbylist:
         if (ref.child(lobby).child('gameOn').get()=='True' and ref.child(lobby).child('playercount').get()!=2):
-            currentGames.append(lobby+'\n')
+            host = ref.child(lobby).child("h_name").get()
+            currentGames.append(lobby)
+            gameList.append(lobby + ' ('+host+')')
     if (len(currentGames) == 0):
         print('no games. You can create a game, instead.')
         input('press any key to go back...')
@@ -135,21 +147,34 @@ def showlobbies():
         status=""
         exit()
         return False
-    print(currentGames)
+    print('')
+    for s in gameList:
+        print("- "+s)
+    print('')
 
 #GUEST - join a lobby
 def joinlobby():
+    screenClear()
     print("Open lobbies :")
     showlobbies()
     i = input("which one you join ? Enter number : ")
     if (i not in ('1','2','3')):
         print("invalid lobby")
+        time.sleep(2)
         joinlobby()
     else :
+        current = []
+        for s in currentGames:
+            current.append(s[-1])
+        if i not in current :
+            print("Ce lobby n'est pas disponible. Il est peut-être complet ou vide...")
+            time.sleep(2)
+            joinlobby()
+
         lobby = 'lobby'+i
         global myref
         myref = ref.child(lobby)
-        getName(True)
+        getName()
         myref.update ({'playercount' : 2})
         global savedLp
         savedLp = myref.child('h_last').get()
@@ -199,7 +224,7 @@ def fullReset():
     print('done')
 
 #ANY - asks for player's name
-def getName(pushAfter):
+def getName():
     name = input("Quel est votre nom ? \n\n >>")
     if name.upper() in nameList:
         name = altName[nameList.index(name.upper())]
@@ -210,10 +235,9 @@ def getName(pushAfter):
         print("Bien reçu !")
         global sName
         sName = name
-        if pushAfter:
-            pushName()
+        pushName()
     else:
-        getName(pushAfter)
+        getName()
 
 #ANY - pushes player's name to server
 def pushName():
@@ -229,7 +253,8 @@ def hisTurn():
     i = 0
     while(myref.child(o_last).get() == savedLp):
          time.sleep(0.5)
-         sys.stdout.write("\r" +'waiting for opponent to play...'+ i*'.')
+         #sys.stdout.write("\r" +'waiting for opponent to play...'+ i*'.')
+         sys.stdout.write("\r" + 'waiting for opponent to play.' + (i % 3) * '.' + (16 - (i % 4)) * ' ')
          sys.stdout.flush()
          i+=1
     n = myref.child(o_play).get()
