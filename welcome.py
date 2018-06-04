@@ -1,6 +1,5 @@
-import subprocess
+
 import os
-import firebase_admin
 
 #Écran d'accueil du jeu, redirige vers les différentes versions du jeu
 

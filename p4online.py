@@ -131,7 +131,10 @@ def showlobbies():
     if (len(currentGames) == 0):
         print('no games. You can create a game, instead.')
         input('press any key to go back...')
-        subprocess.call('puissance4o.py', shell=True)
+        subprocess.call("launch.bat", shell=True)
+        status=""
+        exit()
+        return False
     print(currentGames)
 
 #GUEST - join a lobby
