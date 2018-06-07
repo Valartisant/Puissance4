@@ -728,7 +728,6 @@ class PartieConsole(object):
             # choix d'un emplacement de jeu par le joueur
             choix = self._joueur_courant.choix()
             if choix == -1:
-                subprocess.call("launch.bat", shell=True)
                 break
 
             # on joue le coup
@@ -1024,3 +1023,6 @@ class IAMinMax(object):
 puissance4 = Jeu()
 partie = PartieConsole(puissance4)
 partie.jouer()
+
+subprocess.call("launch.bat", shell=True)
+exit()
