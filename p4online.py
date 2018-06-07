@@ -110,6 +110,8 @@ def newlobby():
         joinlobby()
 
 def wait():
+    screenClear()
+    print("Vous avez rejoint le lobby n°"+myref[-1]+"\n")
     i = 0
     while (myref.child('playercount').get()!=2):
         if(i!=40):
