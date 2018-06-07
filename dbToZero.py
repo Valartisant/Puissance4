@@ -22,6 +22,7 @@ def reset():
   ref.update({
       "lobby1" : {
         "g_last" : "none",
+        "nbr" : "1",
         "g_play" : "0",
         "g_name" : "gname",
         "h_name": "hname",
@@ -35,6 +36,7 @@ def reset():
       },
       "lobby2" : {
         "g_name": "gname",
+        "nbr" : "2",
         "h_name": "hname",
         "g_last" : "none",
         "g_play" : "0",
@@ -48,6 +50,7 @@ def reset():
       },
       "lobby3" : {
         "g_name": "gname",
+        "nbr" : "3",
         "h_name": "hname",
         "g_last" : "none",
         "g_play" : "0",
