@@ -717,7 +717,7 @@ class PartieConsole(object):
             print("Vous avez abandonné la partie.")
         online.fullReset()
         input("-- Press any key --")
-        subprocess.call("welcome.py")
+        subprocess.call("welcome.py", shell=True)
         exit()
 
 puissance4 = Jeu()
