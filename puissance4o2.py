@@ -1,6 +1,7 @@
 import os
 from random import randrange
 import p4online as online
+import subprocess
 
 online.setStatus()
 online.newlobby()
