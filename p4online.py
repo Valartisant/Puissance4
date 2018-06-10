@@ -95,7 +95,6 @@ def newlobby():
             myref = ref.child(lobby)
             if(current.child('gameOn').get()=="False"):
                 current.update({"gameOn" : "True"})
-                print("done")
                 myref.update({"playercount" : 1})
                 resetlobby()
                 getName()
@@ -212,7 +211,6 @@ def resetlobby():
         global savedLp
         savedLp = myref.child('g_last').get()
         return True
-    print('done')
     return False
 
 def fullReset():
@@ -231,7 +229,6 @@ def fullReset():
         "whoplays" : "none",
         "playercount" : 0
         })
-    print('done')
 
 #ANY - asks for player's name
 def getName():
