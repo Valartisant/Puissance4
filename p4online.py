@@ -2,7 +2,12 @@ import sys
 import os
 import subprocess
 import time
-import firebase_admin
+try :
+    import firebase_admin
+except ModuleNotFoundError:
+    print("Erreur d'importation d'un module. Merci de quitter et relancer le jeu.")
+    input("Presser une touche pour continuer...")
+    exit()
 from firebase_admin import credentials
 from firebase_admin import db
 
@@ -104,7 +109,7 @@ def newlobby():
                 getName() #On demande au joueur son nom
                 wait() #On attend un adversaire
                 return True
-        print('Malheureusement, il n\'y a pas de salon disponible... Merci de réessayer plus tard.)
+        print('Malheureusement, il n\'y a pas de salon disponible... Merci de réessayer plus tard.')
         input('Presser une touche pour continuer...')
         subprocess.call("launch.bat", shell=True) #On relance le programme
         return False
@@ -291,28 +296,33 @@ def myturn(n):
     myref.update({s_last : time.time()}) #On enregistre le timecode
     return True
 
-#ANY - Says if player wants to replay
 def recommencer():
+    """
+    Demande à l'utilisateur s'il désire rejouer une partie
+    """
     i = input('Voulez-vous rejouer ? o/n ')
     if i in ('o','n'):
         if i == 'o':
-            myref.update({s_replay : '1'})
+            myref.update({s_replay : '1'}) #Enregistre la réponse sur la BDD
             return True
         else:
-            myref.update({s_replay : '2'})
+            myref.update({s_replay : '2'}) #Enregistre la réponse sur la BDD
             return False
     else:
         print("je n'ai pas bien compris...")
         return recommencer()
-#ANY - Checks if opponent wants to replay
+
 def checkRetry():
+    """
+    Récupération de la réponse de l'adversaire
+    """
     i = 0
-    while(myref.child(o_replay).get()=='0'):
+    while(myref.child(o_replay).get()=='0'): #On affiche un message tant que l'adversaire n'a pas répondu
         time.sleep(0.5)
-        sys.stdout.write("\r" +'waiting for opponent...'+ i*'.')
+        sys.stdout.write("\r" + 'En attente de l\'adversaire.' + (i % 3) * '.' + (16 - (i % 4)) * ' ')
         sys.stdout.flush()
         i+=1
-    if (myref.child(o_replay).get()=='1'):
+    if (myref.child(o_replay).get()=='1'): #Si l'adversaire désire rejouer, on renvoie True
         return True
     else :
         return False

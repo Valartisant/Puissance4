@@ -25,5 +25,5 @@ elif (i=='2'):
 
 elif (i=='exit'):
     print("On espère vous revoir bientôt...\n\n")
-    input("-- Press any key --")
+    input("-- Presser une touche --")
     exit()
