@@ -7,7 +7,14 @@ Tout le programme doit respecter les contraintes suivantes :
 - Être totalement et activement commenté
 - Être régulièrement mis à jour pendant la phase de développement
 
+#### Modules utilisés :
+- os
+- sys
+- time
+- random
+- subprocess
+- firebase_admin
+
 #### Liens utiles :
 ##### http://pauillac.inria.fr/~fpottier/X/INF441/projets/alpha-beta/sujet.pdf (TP info MinMax/AlphaBeta avec Puissance4)
 ##### https://www.youtube.com/watch?v=fInYh90YMJU (MinMax algorithm Python)
-  
