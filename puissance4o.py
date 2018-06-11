@@ -688,19 +688,19 @@ class PartieConsole(object):
                     if (online.checkRetry()):
                         self._nouvelle_partie()
                     else:
-                        print('Opponent said no !')
+                        print('L\'adversaire ne souhaite pas rejouer.')
                         break
                 else:
                     break
 
             elif self._jeu.nul:
                 print("Fin de la partie, personne n'a gagné !")
-                if online.recommencer():
-                    if (online.checkRetry()):
-                        online.resetlobby()
-                        self._nouvelle_partie()
+                if online.recommencer(): #On demande au joueur s'il veut rejouer
+                    if (online.checkRetry()): #On regarde si l'adversaire veut rejouer
+                        online.resetlobby() #On  remet le salon à zéro
+                        self._nouvelle_partie() #On recommence la partie
                     else:
-                        print('Opponent said no !')
+                        print('L\'adversaire ne souhaite pas rejouer.')
                         break
                 else:
                     break
@@ -718,7 +718,7 @@ class PartieConsole(object):
             print("Vous avez abandonné la partie.")
         online.fullReset()
         input("-- Press any key --")
-        subprocess.call("welcome.py", shell=True)
+        subprocess.call("launch.bat", shell=True)
         exit()
 
 puissance4 = Jeu()
