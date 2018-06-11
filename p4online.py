@@ -48,15 +48,17 @@ def screenClear():
 def setStatus():
     print('Que Voulez-vous faire ?\n')
     global status
-    i = input(" [1] créer une partie\n [2] rejoindre une partie\n\n >>")
-    if (i not in ("1","2")):
+    i = input(" [1] Créer une partie\n [2] Rejoindre une partie\n [exit] Retourner au menu\n\n >>")
+    if (i.upper() not in ("1","2","EXIT")):
         print("Je n'ai pas bien compris...")
         setStatus()
     else:
         if (i=='1'):
             status = 'h'
-        else :
+        elif (i=='2') :
             status ='g'
+        else :
+            return subprocess.call("launch.bat", shell=True)
         varSet(status)
         return True
 
@@ -114,7 +116,7 @@ def wait():
     #print("Vous avez rejoint le lobby n°"+str(myref)[-2]+"\n")
     i = 0
     while (myref.child('playercount').get()!=2):
-        if(i!=40):
+        if(i!=30):
             time.sleep(0.5)
             #sys.stdout.write("\r" +'waiting for opponent to join...'+ (i/3)*'.')
             sys.stdout.write("\r" + 'waiting for opponent to join.' + (i % 3) * '.' + (16 - (i % 4)) * ' ')
@@ -128,7 +130,10 @@ def wait():
             if n == 'o':
                 wait()
             else :
-                subprocess.call("welcome.py", shell=True)
+                fullReset()
+                subprocess.call("launch.bat", shell=True)
+                exit()
+
 
 
 #GUEST - show available lobbies to join
@@ -226,7 +231,6 @@ def fullReset():
         #"h_play" : "0",
         "h_replay" : "0",
         "replayOn" : "False",
-        "whoplays" : "none",
         "playercount" : 0
         })
 

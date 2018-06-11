@@ -1029,5 +1029,5 @@ puissance4 = Jeu()
 partie = PartieConsole(puissance4)
 partie.jouer()
 
-subprocess.call("welcome.py", shell=True)
+subprocess.call("launch.bat", shell=True)
 exit()
