@@ -21,7 +21,7 @@ if (i == '1'):
     import puissance4
     exit()
 elif (i=='2'):
-    import puissance4o2
+    import puissance4o
 
 elif (i=='exit'):
     print("On espère vous revoir bientôt...\n\n")
