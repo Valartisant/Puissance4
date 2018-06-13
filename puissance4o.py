@@ -16,8 +16,6 @@ CASE_VIDE = "."
 PION_JOUEUR_1 = "X"
 PION_JOUEUR_2 = "O"
 
-UTILISATION_APLHA_BETA = True
-
 
 class Grille(object):
     """
