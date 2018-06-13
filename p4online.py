@@ -47,7 +47,7 @@ def screenClear():
 #TOUS - asks if player wants to create or join, and sets status
 def setStatus():
     """
-    On demande au joueur s'il veut rejoindre ou créer une partie, et on lui affecte un statut
+    Définit le statut du joueur en fonction de ce qu'il veut faire
     """
     print('Que Voulez-vous faire ?\n')
     global status
@@ -67,7 +67,7 @@ def setStatus():
 
 def varSet(status):
     """
-    On affecte le nom des références à la BDD en fonction du statut du joueur
+    Affecte le nom des références à la BDD en fonction du statut du joueur
     """
     global o_last, o_play, o_replay, o_name
     global s_last, s_play, s_replay, s_name
@@ -94,15 +94,15 @@ def varSet(status):
 def newlobby():
     """
     (Hôte seulement)
-    On crée un salon, on s'assure qu'il est bien remis à zéro et on le met à jour
+    Création d'un salon et remise à zéro
     """
     if (status=='h'):
-        lobbylist = ref.get() #Récupère la liste des salons sur la BDD
+        lobbylist = ref.get() #On récupère la liste des salons sur la BDD
         for lobby in lobbylist:
             current = ref.child(lobby)
             global myref
             myref = ref.child(lobby)
-            if(current.child('gameOn').get()=="False"): #Vérifie si le salon n'est pas déjà occupé
+            if(current.child('gameOn').get()=="False"): #On vérifie si le salon n'est pas déjà occupé
                 current.update({"gameOn" : "True"})
                 myref.update({"playercount" : 1})
                 resetlobby() #On remet le salon à zéro
@@ -146,7 +146,7 @@ def wait():
 def showlobbies():
     """
     (Invité seulement)
-    On affiche les salons ouverts et disponibles
+    Affiche les salons ouverts et disponibles
     """
     global currentGames
     currentGames = []
@@ -209,7 +209,7 @@ def joinlobby():
 def resetlobby():
     """
     (Hôte seulement)
-    On remet la BDD à zéro en début de partie
+    Remise de la BDD à zéro en début de partie
     """
     if (status=='h'):
         myref.update({
@@ -244,7 +244,7 @@ def fullReset():
 
 def getName():
     """
-    On demande son nom à l'utilisateur
+    L'utilisateur rentre son nom
     """
     name = input("Quel est votre nom ? \n\n >>")
     if name.upper() in nameList: #Si le nom rentré est dans la liste de l'Easter Egg, on le remplace en conséquence
@@ -262,25 +262,24 @@ def getName():
 
 def pushName():
     """
-    On envoie le nom rentré par le joueur à la BDD
+    Envoi du nom du joueur à la BDD
     """
     myref.update({s_name: sName})
 
 def oppName():
     """
-    On récupère le nom de l'adversaire
+    Lecture du nom de l'adversaire sur la BDD
     """
     return myref.child(o_name).get()
 
 def hisTurn():
     """
-    On récupère le dernier coup de l'adversaire
+    Récupère le coup de l'adversaire
     """
     global savedLp
     i = 0
     while(myref.child(o_last).get() == savedLp): #On affiche un message d'attente tant que l'adversaire n'a pas joué
          time.sleep(0.5)
-         #sys.stdout.write("\r" +'waiting for opponent to play...'+ i*'.')
          sys.stdout.write("\r" + 'L\'adversaire joue.' + (i % 3) * '.' + (16 - (i % 4)) * ' ')
          sys.stdout.flush()
          i+=1
