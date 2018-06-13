@@ -13,7 +13,7 @@ Tout le programme doit respecter les contraintes suivantes :
 - time
 - random
 - subprocess
-- firebase_admin
+- firebase-admin
 
 #### Liens utiles :
 ##### http://pauillac.inria.fr/~fpottier/X/INF441/projets/alpha-beta/sujet.pdf (TP info MinMax/AlphaBeta avec Puissance4)
