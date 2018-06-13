@@ -1,7 +1,9 @@
 
 import os
 
-#Écran d'accueil du jeu, redirige vers les différentes versions du jeu
+"""
+Écran d'accueil, redirige vers les différentes versions du jeu
+"""
 
 os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -14,7 +16,7 @@ i = 0
 while(i not in ('1','2','exit')):
     if (i !=0 and i not in ('1','2')):
         print('Je n\'ai pas bien compris...')
-    i = input(' [1] 1v1 local\n [2] 1v1 en ligne\n [exit] Quitter le jeu\n\n >>')
+    i = input(' [1] Partie locale\n [2] Partie en ligne\n [exit] Quitter le jeu\n\n >>')
 
 
 if (i == '1'):
