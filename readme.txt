@@ -4,6 +4,7 @@ Les différents fichiers envoyés sont :
 	- puissance4.py
 	- p4online.py
 	- puissance4o.py
+	- serviceAccountCredentials.json	
 
 Les différents modules utilisés sont :
 	- os
