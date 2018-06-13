@@ -719,7 +719,7 @@ class PartieConsole(object):
             print("Vous avez abandonné la partie.")
         online.fullReset()
         input("-- Press any key --")
-        subprocess.call("launch.bat" if os.name='nt' else "welcome.py", shell=True) #Retour au menu
+        subprocess.call("launch.bat" if os.name=='nt' else "welcome.py", shell=True) #Retour au menu
         exit()
 
 puissance4 = Jeu()

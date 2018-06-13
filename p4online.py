@@ -64,7 +64,7 @@ def setStatus():
         elif (i=='2') :
             status ='g' #Sinon il devient invité
         else :
-            subprocess.call("launch.bat", shell=True) #Retour au menu si le joueur veut quitter
+            subprocess.call("launch.bat" if os.name=='nt' else 'welcome.py', shell=True) #Retour au menu si le joueur veut quitter
             exit()
         varSet(status)
         return True
@@ -115,7 +115,7 @@ def newlobby():
                 return True
         print('Malheureusement, il n\'y a pas de salon disponible... Merci de réessayer plus tard.')
         input('Presser une touche pour continuer...')
-        subprocess.call("launch.bat", shell=True) #On relance le programme
+        subprocess.call("launch.bat" if os.name=='nt' else 'welcome.py', shell=True) #On relance le programme
         return False
     else:
         joinlobby() #Si le joueur a le statut d'invité, on le redirige vers la fonction correspondante
@@ -144,7 +144,7 @@ def wait():
                 wait()
             else :
                 fullReset() #On remet le salon entièrement à zéro
-                subprocess.call("launch.bat", shell=True) #On relance le jeu
+                subprocess.call("launch.bat" if os.name=='nt' else "welcome.py", shell=True) #On relance le jeu
                 exit()
 
 def showlobbies():
@@ -164,7 +164,7 @@ def showlobbies():
     if (len(currentGames) == 0): #S'il n'y a aucun salon disponible
         print('Aucun salon n\'est disponible. Vous pouvez essayer d\'en créer un, à la place.')
         input('Presser une touche pour continuer...')
-        subprocess.call("launch.bat", shell=True)
+        subprocess.call("launch.bat" if os.name=='nt' else "welcome.py", shell=True)
         status=""
         exit()
         return False
@@ -183,7 +183,7 @@ def joinlobby():
     showlobbies()
     i = input("Lequel voulez-vous rejoindre ? (Écrivez le numéro correspondant, ou \'exit\' pour quitter.) \n\n >>")
     if i.upper()=="EXIT": #Si le joueur veut quitter
-        subprocess.call("launch.bat", shell=True) #on retourne au menu
+        subprocess.call("launch.bat" if os.name=='nt' else "welcome.py", shell=True) #on retourne au menu
         status="" #On réinitialise le statut du joueur
         exit()
         return False
