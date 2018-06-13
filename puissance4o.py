@@ -712,13 +712,16 @@ class PartieConsole(object):
                     self._joueur_courant = self._joueur1
 
     def finduGame(self):
-        if self._joueur_courant == self._joueur2:
+        """
+        L'un des deux joueurs a quitté, retour au menu principal
+        """
+        if self._joueur_courant == self._joueur2: #Vérifie le joueur ayant quitté, et affiche un message en conséquence
             print("Votre partenaire de jeu a quitté.")
         else:
             print("Vous avez abandonné la partie.")
         online.fullReset()
         input("-- Press any key --")
-        subprocess.call("launch.bat", shell=True)
+        subprocess.call("launch.bat" if os.name='nt' else "welcome.py", shell=True) #Retour au menu
         exit()
 
 puissance4 = Jeu()

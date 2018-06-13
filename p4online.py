@@ -8,12 +8,15 @@ except ModuleNotFoundError:
     print("Erreur d'importation d'un module. Merci de quitter et relancer le jeu.")
     input("Presser une touche pour continuer...")
     exit()
+
 from firebase_admin import credentials
 from firebase_admin import db
 
 
 nameList = ["VAL", "THMS", "CHRISTOPHE", "LUDOVIC"] #Easter-Egg - si le nom entré par le joueur figure dans cette liste, il est remplacé par un nom de altName
 altName = ["Valartisant", "Lalicorne", "Mr. Durant", "Mr. Rion"]
+
+status=""
 
 sName = "sName"
 
@@ -61,7 +64,8 @@ def setStatus():
         elif (i=='2') :
             status ='g' #Sinon il devient invité
         else :
-            return subprocess.call("launch.bat", shell=True) #Retour au menu si le joueur veut quitter
+            subprocess.call("launch.bat", shell=True) #Retour au menu si le joueur veut quitter
+            exit()
         varSet(status)
         return True
 
