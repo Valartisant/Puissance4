@@ -1,9 +1,10 @@
 import os
 from random import randrange
-<<<<<<< HEAD
-=======
+import p4online as online
 import subprocess
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
+
+online.setStatus()
+online.newlobby()
 
 
 # Définition des constantes
@@ -14,12 +15,6 @@ CASE_VIDE = "."
 
 PION_JOUEUR_1 = "X"
 PION_JOUEUR_2 = "O"
-
-UTILISATION_APLHA_BETA = True
-<<<<<<< HEAD
-=======
-AFFICHAGE_NBRE_COUPS_SIMULES = False
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
 
 
 class Grille(object):
@@ -372,51 +367,24 @@ class Jeu(object):
                 colonnes_jouables.append(colonne)
         return colonnes_jouables
 
-<<<<<<< HEAD
-    def nbre_cases_alignees_pion(self, pion, possibilite_gain=False):
-        """
-        Détermination du nombre maximal de pions alignés
-        :param pion: pion pour lequel il faut chercher les alignements
-        :param possibilite_gain: True -> renvoie le plus grand nombre de cases alignées avec possibilité de gain
-=======
     def nbre_cases_alignees_pion(self, pion):
         """
         Détermination du nombre maximal de pions alignés
         :param pion: pion pour lequel il faut chercher les alignements
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
         :return: entier
         """
         nbre_max = 0
 
         # ----------------------------------------------------------------------------------------------------------------------------
         # lignes horizontales
-<<<<<<< HEAD
-        nb = 0
-=======
         nb_cases_alignement = 0
         case_vide_debut_alignement = False
 
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
         for ligne in range(self._grille.nbre_lignes):
             for colonne in range(self._grille.nbre_colonnes):
                 valeur_case = self._grille.valeur(ligne, colonne)
 
                 if valeur_case != pion:
-<<<<<<< HEAD
-                    if not possibilite_gain or (possibilite_gain and valeur_case == CASE_VIDE):
-                        if nb > nbre_max:
-                            nbre_max = nb
-                        nb = 0
-                else:
-                    nb += 1
-
-        if nb > nbre_max:
-            nbre_max = nb
-
-        # ----------------------------------------------------------------------------------------------------------------------------
-        # lignes verticales
-        nb = 0
-=======
                     case_vide_fin_alignement = valeur_case == CASE_VIDE
 
                     if nb_cases_alignement > nbre_max and case_vide_fin_alignement:
@@ -434,27 +402,11 @@ class Jeu(object):
         nb_cases_alignement = 0
         case_vide_debut_alignement = False
 
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
         for colonne in range(self._grille.nbre_colonnes):
             for ligne in range(self._grille.nbre_lignes):
                 valeur_case = self._grille.valeur(ligne, colonne)
 
                 if valeur_case != pion:
-<<<<<<< HEAD
-                    if not possibilite_gain or (possibilite_gain and valeur_case == CASE_VIDE):
-                        if nb > nbre_max:
-                            nbre_max = nb
-                        nb = 0
-                else:
-                    nb += 1
-
-        if nb > nbre_max:
-            nbre_max = nb
-
-        # ----------------------------------------------------------------------------------------------------------------------------
-        # diagonales /
-        nb = 0
-=======
                     case_vide_fin_alignement = valeur_case == CASE_VIDE
 
                     if nb_cases_alignement > nbre_max and case_vide_fin_alignement:
@@ -471,7 +423,6 @@ class Jeu(object):
         # diagonales /
         nb_cases_alignement = 0
         case_vide_debut_alignement = False
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
 
         ligne_depart = 0
         colonne_depart = 0
@@ -482,14 +433,6 @@ class Jeu(object):
             valeur_case = self._grille.valeur(ligne, colonne)
 
             if valeur_case != pion:
-<<<<<<< HEAD
-                if not possibilite_gain or (possibilite_gain and valeur_case == CASE_VIDE):
-                    if nb > nbre_max:
-                        nbre_max = nb
-                    nb = 0
-            else:
-                nb += 1
-=======
                 case_vide_fin_alignement = valeur_case == CASE_VIDE
 
                 if nb_cases_alignement > nbre_max and case_vide_fin_alignement:
@@ -501,7 +444,6 @@ class Jeu(object):
                 nb_cases_alignement += 1
                 if nb_cases_alignement > nbre_max and case_vide_debut_alignement:
                     nbre_max = nb_cases_alignement
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
 
             if ligne > 0 and colonne < self._grille.nbre_colonnes - 1:
                 ligne -= 1
@@ -522,14 +464,6 @@ class Jeu(object):
             valeur_case = self._grille.valeur(ligne, colonne)
 
             if valeur_case != pion:
-<<<<<<< HEAD
-                if not possibilite_gain or (possibilite_gain and valeur_case == CASE_VIDE):
-                    if nb > nbre_max:
-                        nbre_max = nb
-                    nb = 0
-            else:
-                nb += 1
-=======
                 case_vide_fin_alignement = valeur_case == CASE_VIDE
 
                 if nb_cases_alignement > nbre_max and case_vide_fin_alignement:
@@ -541,7 +475,6 @@ class Jeu(object):
                 nb_cases_alignement += 1
                 if nb_cases_alignement > nbre_max and case_vide_debut_alignement:
                     nbre_max = nb_cases_alignement
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
 
             if ligne > 0 and colonne < self._grille.nbre_colonnes - 1:
                 ligne -= 1
@@ -553,19 +486,10 @@ class Jeu(object):
                 ligne = ligne_depart
                 colonne = colonne_depart
 
-<<<<<<< HEAD
-        if nb > nbre_max:
-            nbre_max = nb
-
-        # ----------------------------------------------------------------------------------------------------------------------------
-        # diagonales \
-        nb = 0
-=======
         # ----------------------------------------------------------------------------------------------------------------------------
         # diagonales \
         nb_cases_alignement = 0
         case_vide_debut_alignement = False
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
 
         ligne_depart = 0
         colonne_depart = self._grille.nbre_colonnes - 1
@@ -576,14 +500,6 @@ class Jeu(object):
             valeur_case = self._grille.valeur(ligne, colonne)
 
             if valeur_case != pion:
-<<<<<<< HEAD
-                if not possibilite_gain or (possibilite_gain and valeur_case == CASE_VIDE):
-                    if nb > nbre_max:
-                        nbre_max = nb
-                    nb = 0
-            else:
-                nb += 1
-=======
                 case_vide_fin_alignement = valeur_case == CASE_VIDE
 
                 if nb_cases_alignement > nbre_max and case_vide_fin_alignement:
@@ -595,7 +511,6 @@ class Jeu(object):
                 nb_cases_alignement += 1
                 if nb_cases_alignement > nbre_max and case_vide_debut_alignement:
                     nbre_max = nb_cases_alignement
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
 
             if ligne > 0 and colonne > 0:
                 ligne -= 1
@@ -616,14 +531,6 @@ class Jeu(object):
             valeur_case = self._grille.valeur(ligne, colonne)
 
             if valeur_case != pion:
-<<<<<<< HEAD
-                if not possibilite_gain or (possibilite_gain and valeur_case == CASE_VIDE):
-                    if nb > nbre_max:
-                        nbre_max = nb
-                    nb = 0
-            else:
-                nb += 1
-=======
                 case_vide_fin_alignement = valeur_case == CASE_VIDE
 
                 if nb_cases_alignement > nbre_max and case_vide_fin_alignement:
@@ -635,7 +542,6 @@ class Jeu(object):
                 nb_cases_alignement += 1
                 if nb_cases_alignement > nbre_max and case_vide_debut_alignement:
                     nbre_max = nb_cases_alignement
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
 
             if ligne > 0 and colonne > 0:
                 ligne -= 1
@@ -647,12 +553,6 @@ class Jeu(object):
                 ligne = ligne_depart
                 colonne = colonne_depart
 
-<<<<<<< HEAD
-        if nb > nbre_max:
-            nbre_max = nb
-
-=======
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
         return nbre_max
 
 
@@ -663,38 +563,36 @@ class JoueurHumain(object):
 
         self._jeu = jeu
 
-    def choix(self):
+    def choix(self, joueurCourant, joueur1, joueur2):
         """
         Demande un numéro de colonne à l'utilisateur et renvoie ce numéro si la colonne est jouable, -1 pour arrêter
         :return: numéro de colonne (int) ou -1 pour quitter la partie
         """
-        while True:
-            reponse = input("Où voulez-vous jouer ? \n (exit pour quitter) ")
+
+        if joueurCourant == joueur2:
+            reponse = online.hisTurn()
             try:
-                reponse = int(reponse)
+                reponse=int(reponse)
             except ValueError:
-                if reponse == 'exit':
+                if reponse.upper() =="EXIT":
                     return -1
-            else:
-                if reponse in self._jeu.colonnes_jouables:
-                    return reponse
+            return reponse
+        else:
+            while True:
+                reponse = input("Où voulez-vous jouer ? \n (exit pour quitter) ")
+                try:
+                    reponse = int(reponse)
+                except ValueError:
+                    if reponse.upper() == 'EXIT':
+                        online.myturn(reponse)
+                        #online.fullReset()
+                        return -1
                 else:
-                    print('Veuillez saisir une valeur correcte')
-
-
-class IaAleatoire(object):
-    def __init__(self, jeu, nom, pion):
-        self.nom = nom
-        self.pion = pion
-
-        self._jeu = jeu
-
-    def choix(self):
-        """
-        Renvoi une colonne au hasard parmi les colonnes jouables
-        :return:
-        """
-        return randrange(len(self._jeu.colonnes_jouables))
+                    if reponse in self._jeu.colonnes_jouables:
+                        online.myturn(reponse)
+                        return reponse
+                    else:
+                        print('Veuillez saisir une valeur correcte')
 
 
 class PartieConsole(object):
@@ -747,93 +645,18 @@ class PartieConsole(object):
         Initialise une nouvelle partie
         """
         self._effacer_ecran()
-        print('Bienvenue dans le jeu du puissance 4 !')
 
-        nbre_joueurs_humains = self._demander_nbre_joueurs()
+        self._joueur1 = JoueurHumain(self._jeu, online.sName, PION_JOUEUR_1)
+        self._joueur2 = JoueurHumain(self._jeu, online.oppName(), PION_JOUEUR_2)
 
-        if nbre_joueurs_humains == 0:
-            profondeur = self._demander_profondeur_ia()
-            if profondeur != -1:
-<<<<<<< HEAD
-                self._joueur1 = IAMinMax(self._jeu, 'MinMax1', PION_JOUEUR_1, PION_JOUEUR_2, profondeur)
-                self._joueur2 = IAMinMax(self._jeu, 'MinMax2', PION_JOUEUR_2, PION_JOUEUR_1, profondeur)
-=======
-                self._joueur1 = IAMinMax(self._jeu, 'MinMax1', PION_JOUEUR_1, PION_JOUEUR_2, profondeur, UTILISATION_APLHA_BETA)
-                self._joueur2 = IAMinMax(self._jeu, 'MinMax2', PION_JOUEUR_2, PION_JOUEUR_1, profondeur, UTILISATION_APLHA_BETA)
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
-            else:
-                self._joueur1 = IaAleatoire(self._jeu, 'Random1', PION_JOUEUR_1)
-                self._joueur2 = IaAleatoire(self._jeu, 'Random2', PION_JOUEUR_2)
 
-        elif nbre_joueurs_humains == 1:
-            nom = input('Pseudo du joueur ?')
-<<<<<<< HEAD
-            profondeur = self._demander_profondeur_ia()
-            self._joueur1 = JoueurHumain(self._jeu, nom, PION_JOUEUR_1)
-            if profondeur != -1:
-                self._joueur2 = IAMinMax(self._jeu, 'MinMax', PION_JOUEUR_2, PION_JOUEUR_1, profondeur)
-=======
-            while nom == 'Minmax' or nom == 'Random':
-                print('Le nom du joueur doit être différent de "Minmax" ou "Random" !')
-                nom = input('Pseudo du joueur ?')
-            profondeur = self._demander_profondeur_ia()
-            self._joueur1 = JoueurHumain(self._jeu, nom, PION_JOUEUR_1)
-            if profondeur != -1:
-                self._joueur2 = IAMinMax(self._jeu, 'MinMax', PION_JOUEUR_2, PION_JOUEUR_1, profondeur, UTILISATION_APLHA_BETA)
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
-            else:
-                self._joueur2 = IaAleatoire(self._jeu, 'Random', PION_JOUEUR_2)
-
-        elif nbre_joueurs_humains == 2:
-            nom1 = input('Pseudo du joueur 1 ?')
-            nom2 = input('Pseudo du joueur 2 ?')
-            while nom1 == nom2:
-                print('Le nom du joueur 2 doit être différent de celui du joueur 1 !')
-                nom2 = input('Pseudo du joueur 2 ?')
-            self._joueur1 = JoueurHumain(self._jeu, nom1, PION_JOUEUR_1)
-            self._joueur2 = JoueurHumain(self._jeu, nom2, PION_JOUEUR_2)
-
-        self._joueur_courant = self._joueur1
+        if (online.status=="h"):
+            self._joueur_courant = self._joueur1
+        else :
+            self._joueur_courant = self._joueur2
         self._jeu.reinitialiser()
         self._effacer_ecran()
         self._affiche_plateau()
-
-    def _demander_nbre_joueurs(self):
-        """
-        Demande le nombre de joueurs humains à l'utilisateur
-        :return: entier compris entre 0 et 2
-        """
-        while True:
-            try:
-                nbre_joueurs_humains = int(input('Nombre de joueurs humains (0/1/2) ?'))
-            except ValueError:
-                pass
-            else:
-                if nbre_joueurs_humains in [0, 1, 2]:
-                    return nbre_joueurs_humains
-
-    def _demander_profondeur_ia(self):
-        """
-        Demande la difficulté de l'IA à l'utilisateur (correspond à la profondeur de recherche des coups)
-        :return: entier (-1 pour l'IA aléatoire, positif ou nulle pour MinMAx)
-        """
-        while True:
-            try:
-                profondeur = int(input("Difficulté de l'IA (0-5), (-1) pour une IA aléatoire ?"))
-            except ValueError:
-<<<<<<< HEAD
-                pass
-            else:
-                return profondeur
-=======
-                print('Veuillez saisir un nombre entier !')
-            else:
-                if profondeur < -1:
-                    print('Veuillez saisir une valeur correcte !')
-                    return self._demander_profondeur_ia()
-                else:
-                    return profondeur
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
 
     def jouer(self):
         """
@@ -846,8 +669,9 @@ class PartieConsole(object):
             print("C'est", self._joueur_courant.nom, "qui joue avec les ", self._joueur_courant.pion, " !")
 
             # choix d'un emplacement de jeu par le joueur
-            choix = self._joueur_courant.choix()
+            choix = self._joueur_courant.choix(self._joueur_courant, self._joueur1, self._joueur2)
             if choix == -1:
+                self.finduGame()
                 break
 
             # on joue le coup
@@ -858,15 +682,24 @@ class PartieConsole(object):
             # Préparation du tour de jeu suivant
             if self._jeu.gagne:
                 print('Bravo', self._joueur_courant.nom, '! Tu as gagné !')
-                if self._recommencer():
-                    self._nouvelle_partie()
+                if online.recommencer():
+                    if (online.checkRetry()):
+                        self._nouvelle_partie()
+                    else:
+                        print('L\'adversaire ne souhaite pas rejouer.')
+                        break
                 else:
                     break
 
             elif self._jeu.nul:
                 print("Fin de la partie, personne n'a gagné !")
-                if self._recommencer():
-                    self._nouvelle_partie()
+                if online.recommencer(): #On demande au joueur s'il veut rejouer
+                    if (online.checkRetry()): #On regarde si l'adversaire veut rejouer
+                        online.resetlobby() #On  remet le salon à zéro
+                        self._nouvelle_partie() #On recommence la partie
+                    else:
+                        print('L\'adversaire ne souhaite pas rejouer.')
+                        break
                 else:
                     break
             else:
@@ -876,296 +709,19 @@ class PartieConsole(object):
                 else:
                     self._joueur_courant = self._joueur1
 
-
-class IAMinMax(object):
-    def __init__(self, jeu, nom, pion, pion_adversaire, profondeur=1, utilisation_alpha_beta=True):
+    def finduGame(self):
         """
-        :param jeu:
-        :param nom:
-        :param pion:
-        :param pion_adversaire:
-        :param profondeur: entier supérieur à 0
+        L'un des deux joueurs a quitté, retour au menu principal
         """
-        self.nom = nom
-        self.pion = pion
-
-        self._jeu = jeu
-        self._pion_adversaire = pion_adversaire
-        self._profondeur = profondeur
-        self._utilisation_alpha_beta = utilisation_alpha_beta
-
-        self._score_max = 1000
-        self.nbre_coups_simules = 0
-
-    def choix(self):
-        """
-        Lance la recherche du meilleur coup avec ou sans l'élagage alpha beta
-        :return: colonne jouée
-        """
-        if self._utilisation_alpha_beta:
-            return self._choix_alpha_beta()
+        if self._joueur_courant == self._joueur2: #Vérifie le joueur ayant quitté, et affiche un message en conséquence
+            print("Votre partenaire de jeu a quitté.")
         else:
-            return self._choix_minmax()
-
-    def _choix_minmax(self):
-        """"
-        Détermine le meilleur coup possible pour l'IA
-        Cette méthode n'est appelée qui s'il y a au moins un coup jouable pour l'IA
-        :return: colonne jouée
-        """
-        # Il faut retenir le coup qui donnera le score maximal pour l'IA.
-        # On initialise donc "score_max" à la valeur la moins élevée...
-        score_max = -self._score_max - 1  # -1 pour être certain que "score > score_max" sera vérifié au moins une fois
-
-        # ...puis pour chaque premier coup possible pour l'IA...
-        for colonne in self._jeu.colonnes_jouables:
-            # ...on simule le coup...
-            coup = self._jeu.jouer(colonne, self.pion)
-
-            # ...puis on simule le meilleur coup possible de l'adversaire
-            # et on récupère le score obtenu en évaluant la situation du point de vue de l'IA
-            score = self.simuler_coup_adversaire(self._profondeur - 1)
-            self.nbre_coups_simules += 1
-            self._jeu.annuler(coup)  # annulation du coup simulé
-
-            # Il faut donc retenir le score le plus avantageux pour l'IA...
-            if score > score_max:
-                score_max = score
-                coup_retenu = coup
-
-            # Puis on recommence pour rechercher un éventuel meilleur premier coup
-            # (si tous les coups possibles ont été testés la boucle s'arrête)
-
-        # Parmi tous les coups possibles de l'IA on retourne le meilleur
-<<<<<<< HEAD
-=======
-        if AFFICHAGE_NBRE_COUPS_SIMULES:
-            print(self.nbre_coups_simules)
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
-        self.nbre_coups_simules = 0
-        return coup_retenu.colonne
-
-    def _choix_alpha_beta(self):
-        """"
-        Détermine le meilleur coup possible pour l'IA
-        Cette méthode n'est appelée qui s'il y a au moins un coup jouable pour l'IA
-        :return: colonne jouée
-        """
-        alpha = -self._score_max
-        beta = self._score_max
-
-        # Il faut retenir le coup qui donnera le score maximal pour l'IA.
-        # On initialise donc "score_max" à la valeur la moins élevée...
-        score_max = -self._score_max-1  # -1 pour être certain que "score > score_max" sera vérifié au moins une fois
-
-        # ...puis pour chaque premier coup possible pour l'IA...
-        for colonne in self._jeu.colonnes_jouables:
-            # ...on simule le coup...
-            coup = self._jeu.jouer(colonne, self.pion)
-
-            # ...puis on simule le meilleur coup possible de l'adversaire
-            # et on récupère le score obtenu en évaluant la situation du point de vue de l'IA
-            score = self.simuler_coup_adversaire_alpha_beta(self._profondeur - 1, alpha, beta)
-            self.nbre_coups_simules += 1
-            self._jeu.annuler(coup)  # annulation du coup simulé
-
-            # Il faut donc retenir le score le plus avantageux pour l'IA...
-            if score > score_max:
-                score_max = score
-                coup_retenu = coup
-
-            if score_max >= beta:
-                break
-
-            alpha = max(alpha, score_max)
-
-            # Puis on recommence pour rechercher un éventuel meilleur premier coup
-            # (si tous les coups possibles ont été testés la boucle s'arrête)
-
-        # Parmi tous les coups possibles de l'IA on retourne le meilleur
-<<<<<<< HEAD
-=======
-        if AFFICHAGE_NBRE_COUPS_SIMULES:
-            print(self.nbre_coups_simules)
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
-        self.nbre_coups_simules = 0
-        return coup_retenu.colonne
-
-    def simuler_coup_adversaire(self, profondeur):
-        """
-        Simulation des coups possibles pour l'adversaire
-        If faut retenir le score minimal du point de vue de l'IA
-        C'est la fonction "min" de l'algorithme minmax
-        :param profondeur: profondeur maximale de recherche des coups
-        :return: score obtenu le plus défavorable du point de vue de l'IA
-        """
-        # Si la profondeur maximale est atteinte (-1 si départ avec profondeur=0, 0 autrement) ou si le jeu est fini,
-        # il faut évaluer la situation suite au dernier coup joué. Ce coup a été joué par l'IA
-        if profondeur <= 0 or self._jeu.fini:
-            return self._evaluer_score(self.pion)
-
-<<<<<<< HEAD
-        # On va simuler les coups possible de l'adversaire en réponse au dernier coup joué par l'IA
-=======
-        # On va simuler les coups possibles de l'adversaire en réponse au dernier coup joué par l'IA
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
-        # On va retenir le score minimal obtenu en évaluant la situation du point de vue de l'IA
-        # On va donc récupérer la pire situation dans laquelle va se trouver l'IA suite au coup de l'adversaire
-        score_min = self._score_max
-
-        for colonne in self._jeu.colonnes_jouables:
-            coup = self._jeu.jouer(colonne, self._pion_adversaire)
-            score = self.simuler_coup_ia(profondeur - 1)
-            self.nbre_coups_simules += 1
-            self._jeu.annuler(coup)
-
-            score_min = min(score, score_min)
-
-        return score_min
-
-    def simuler_coup_ia(self, profondeur):
-        """
-        Simulation des coups possibles pour l'IA
-        If faut retenir le score maximal du point de vue de l'IA
-        C'est la fonction "max" de l'algorithme minmax
-        :param profondeur: profondeur maximale de recherche des coups
-        :return: score obtenu le plus favorable du point de vue de l'IA
-        """
-        # Si la profondeur maximale est atteinte (-1 si départ avec profondeur=0, 0 autrement) ou si le jeu est fini,
-        # il faut évaluer la situation suite au dernier coup joué. Ce coup a été joué par l'adversaire
-        if profondeur <= 0 or self._jeu.fini:
-            return self._evaluer_score(self._pion_adversaire)
-
-        # On va simuler les coups possible de l'IA en réponse au dernier coup joué par l'adversaire
-        # On va retenir le score maximal obtenu en évaluant la situation du point de vue de l'IA
-        # On va donc récupérer la meilleur situation dans laquelle va se trouver l'IA après qu'elle ait jouée
-        score_max = -self._score_max
-
-        for colonne in self._jeu.colonnes_jouables:
-            coup = self._jeu.jouer(colonne, self.pion)
-            score = self.simuler_coup_adversaire(profondeur - 1)
-            self.nbre_coups_simules += 1
-            self._jeu.annuler(coup)
-
-            score_max = max(score, score_max)
-
-        return score_max
-
-    def simuler_coup_adversaire_alpha_beta(self, profondeur, alpha, beta):
-        """
-        Simulation des coups possibles pour l'adversaire
-        If faut retenir le score minimal du point de vue de l'IA
-        C'est la fonction "min" de l'algorithme minmax
-        :param profondeur: profondeur maximale de recherche des coups
-        :param alpha: valeur minimale que l'IA peut espérer obtenir en jouant le coup
-        :param beta: valeur maximale que l'IA peut espérer obtenir en jouant le coup
-        :return: score obtenu le plus défavorable du point de vue de l'IA
-        """
-        # Si la profondeur maximale est atteinte (-1 si départ avec profondeur=0, 0 autrement) ou si le jeu est fini,
-        # il faut évaluer la situation suite au dernier coup joué. Ce coup a été joué par l'IA
-        if profondeur <= 0 or self._jeu.fini:
-            return self._evaluer_score(self.pion)
-
-        # On va simuler les coups possible de l'adversaire en réponse au dernier coup joué par l'IA
-        # On va retenir le score minimal obtenu en évaluant la situation du point de vue de l'IA
-        # On va donc récupérer la pire situation dans laquelle va se trouver l'IA suite au coup de l'adversaire
-        score_min = self._score_max
-
-        for colonne in self._jeu.colonnes_jouables:
-            coup = self._jeu.jouer(colonne, self._pion_adversaire)
-            score = self.simuler_coup_ia_alpha_beta(profondeur - 1, alpha, beta)
-            self.nbre_coups_simules += 1
-            self._jeu.annuler(coup)
-
-            score_min = min(score, score_min)
-
-            # coupure alpha
-            if score_min <= alpha:
-                break
-            beta = min(beta, score_min)
-
-        return score_min
-
-    def simuler_coup_ia_alpha_beta(self, profondeur, alpha, beta):
-        """
-        Simulation des coups possibles pour l'IA
-        If faut retenir le score maximal du point de vue de l'IA
-        C'est la fonction "max" de l'algorithme minmax
-        :param profondeur: profondeur maximale de recherche des coups
-        :param alpha: valeur minimale que l'IA peut espérer obtenir en jouant le coup
-        :param beta: valeur maximale que l'IA peut espérer obtenir en jouant le coup
-        :return: score obtenu le plus favorable du point de vue de l'IA
-        """
-        # Si la profondeur maximale est atteinte (-1 si départ avec profondeur=0, 0 autrement) ou si le jeu est fini,
-        # il faut évaluer la situation suite au dernier coup joué. Ce coup a été joué par l'adversaire
-        if profondeur <= 0 or self._jeu.fini:
-            return self._evaluer_score(self._pion_adversaire)
-
-        # On va simuler les coups possible de l'IA en réponse au dernier coup joué par l'adversaire
-        # On va retenir le score maximal obtenu en évaluant la situation du point de vue de l'IA
-        # On va donc récupérer la meilleur situation dans laquelle va se trouver l'IA après qu'elle ait jouée
-        score_max = -self._score_max
-
-        for colonne in self._jeu.colonnes_jouables:
-            coup = self._jeu.jouer(colonne, self.pion)
-            score = self.simuler_coup_adversaire_alpha_beta(profondeur - 1, alpha, beta)
-            self.nbre_coups_simules += 1
-            self._jeu.annuler(coup)
-
-            score_max = max(score, score_max)
-
-            # coupure beta
-            if score_max >= beta:
-                break
-            alpha = max(alpha, score_max)
-
-        return score_max
-
-    def _evaluer_score(self, pion):
-        """
-        Calcul une évaluation de la situation du jeu du point de vue de l'IA
-        :param pion: c'est le dernier pion qui a été joué
-        :return: un entier compris entre -score_max et +score_max
-        """
-        if self._jeu.gagne:
-            if pion == self.pion:
-                # la partie est gagnée par l'IA
-                return self._score_max
-            else:
-                # la partie est gagnée par l'adversaire
-                return -self._score_max
-
-        elif self._jeu.nul:
-            # égalité
-            return 0
-
-        # évaluation de la situation du point de vue de l'IA
-
-        # on calcule le nombre maximal de cases alignées pour l'Ia et l'adversaire
-<<<<<<< HEAD
-        nbre_pions_alignes_ia = self._jeu.nbre_cases_alignees_pion(self.pion, True)
-        nbre_pions_alignes_adversaire = self._jeu.nbre_cases_alignees_pion(self._pion_adversaire, True)
-=======
-        nbre_pions_alignes_ia = self._jeu.nbre_cases_alignees_pion(self.pion)
-        nbre_pions_alignes_adversaire = self._jeu.nbre_cases_alignees_pion(self._pion_adversaire)
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
-
-        # on calcule le score pour chaque joueur (arrondi à l'entier inférieur) tel que la différence reste comprise
-        # entre -score_max et score_max
-        score_ia = nbre_pions_alignes_ia * self._score_max // (2 * self._jeu.nbre_cases_gain)
-        score_adversaire = nbre_pions_alignes_adversaire * self._score_max // (2 * self._jeu.nbre_cases_gain)
-
-        # le score relatif pour l'IA est la différence
-        return score_ia - score_adversaire
-
+            print("Vous avez abandonné la partie.")
+        online.fullReset()
+        input("-- Press any key --")
+        subprocess.call("launch.bat" if os.name=='nt' else "welcome.py", shell=True) #Retour au menu
+        exit()
 
 puissance4 = Jeu()
 partie = PartieConsole(puissance4)
-<<<<<<< HEAD
 partie.jouer()
-=======
-partie.jouer()
-
-subprocess.call("launch.bat" if os.name=='nt' else 'welcome.py', shell=True)
-exit()
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65

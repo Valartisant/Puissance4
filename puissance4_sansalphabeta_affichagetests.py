@@ -1,9 +1,6 @@
 import os
 from random import randrange
-<<<<<<< HEAD
-=======
 import subprocess
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
 
 
 # Définition des constantes
@@ -15,11 +12,8 @@ CASE_VIDE = "."
 PION_JOUEUR_1 = "X"
 PION_JOUEUR_2 = "O"
 
-UTILISATION_APLHA_BETA = True
-<<<<<<< HEAD
-=======
-AFFICHAGE_NBRE_COUPS_SIMULES = False
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
+UTILISATION_APLHA_BETA = False
+AFFICHAGE_NBRE_COUPS_SIMULES = True
 
 
 class Grille(object):
@@ -372,51 +366,24 @@ class Jeu(object):
                 colonnes_jouables.append(colonne)
         return colonnes_jouables
 
-<<<<<<< HEAD
-    def nbre_cases_alignees_pion(self, pion, possibilite_gain=False):
-        """
-        Détermination du nombre maximal de pions alignés
-        :param pion: pion pour lequel il faut chercher les alignements
-        :param possibilite_gain: True -> renvoie le plus grand nombre de cases alignées avec possibilité de gain
-=======
     def nbre_cases_alignees_pion(self, pion):
         """
         Détermination du nombre maximal de pions alignés
         :param pion: pion pour lequel il faut chercher les alignements
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
         :return: entier
         """
         nbre_max = 0
 
         # ----------------------------------------------------------------------------------------------------------------------------
         # lignes horizontales
-<<<<<<< HEAD
-        nb = 0
-=======
         nb_cases_alignement = 0
         case_vide_debut_alignement = False
 
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
         for ligne in range(self._grille.nbre_lignes):
             for colonne in range(self._grille.nbre_colonnes):
                 valeur_case = self._grille.valeur(ligne, colonne)
 
                 if valeur_case != pion:
-<<<<<<< HEAD
-                    if not possibilite_gain or (possibilite_gain and valeur_case == CASE_VIDE):
-                        if nb > nbre_max:
-                            nbre_max = nb
-                        nb = 0
-                else:
-                    nb += 1
-
-        if nb > nbre_max:
-            nbre_max = nb
-
-        # ----------------------------------------------------------------------------------------------------------------------------
-        # lignes verticales
-        nb = 0
-=======
                     case_vide_fin_alignement = valeur_case == CASE_VIDE
 
                     if nb_cases_alignement > nbre_max and case_vide_fin_alignement:
@@ -434,27 +401,11 @@ class Jeu(object):
         nb_cases_alignement = 0
         case_vide_debut_alignement = False
 
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
         for colonne in range(self._grille.nbre_colonnes):
             for ligne in range(self._grille.nbre_lignes):
                 valeur_case = self._grille.valeur(ligne, colonne)
 
                 if valeur_case != pion:
-<<<<<<< HEAD
-                    if not possibilite_gain or (possibilite_gain and valeur_case == CASE_VIDE):
-                        if nb > nbre_max:
-                            nbre_max = nb
-                        nb = 0
-                else:
-                    nb += 1
-
-        if nb > nbre_max:
-            nbre_max = nb
-
-        # ----------------------------------------------------------------------------------------------------------------------------
-        # diagonales /
-        nb = 0
-=======
                     case_vide_fin_alignement = valeur_case == CASE_VIDE
 
                     if nb_cases_alignement > nbre_max and case_vide_fin_alignement:
@@ -471,7 +422,6 @@ class Jeu(object):
         # diagonales /
         nb_cases_alignement = 0
         case_vide_debut_alignement = False
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
 
         ligne_depart = 0
         colonne_depart = 0
@@ -482,14 +432,6 @@ class Jeu(object):
             valeur_case = self._grille.valeur(ligne, colonne)
 
             if valeur_case != pion:
-<<<<<<< HEAD
-                if not possibilite_gain or (possibilite_gain and valeur_case == CASE_VIDE):
-                    if nb > nbre_max:
-                        nbre_max = nb
-                    nb = 0
-            else:
-                nb += 1
-=======
                 case_vide_fin_alignement = valeur_case == CASE_VIDE
 
                 if nb_cases_alignement > nbre_max and case_vide_fin_alignement:
@@ -501,7 +443,6 @@ class Jeu(object):
                 nb_cases_alignement += 1
                 if nb_cases_alignement > nbre_max and case_vide_debut_alignement:
                     nbre_max = nb_cases_alignement
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
 
             if ligne > 0 and colonne < self._grille.nbre_colonnes - 1:
                 ligne -= 1
@@ -522,14 +463,6 @@ class Jeu(object):
             valeur_case = self._grille.valeur(ligne, colonne)
 
             if valeur_case != pion:
-<<<<<<< HEAD
-                if not possibilite_gain or (possibilite_gain and valeur_case == CASE_VIDE):
-                    if nb > nbre_max:
-                        nbre_max = nb
-                    nb = 0
-            else:
-                nb += 1
-=======
                 case_vide_fin_alignement = valeur_case == CASE_VIDE
 
                 if nb_cases_alignement > nbre_max and case_vide_fin_alignement:
@@ -541,7 +474,6 @@ class Jeu(object):
                 nb_cases_alignement += 1
                 if nb_cases_alignement > nbre_max and case_vide_debut_alignement:
                     nbre_max = nb_cases_alignement
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
 
             if ligne > 0 and colonne < self._grille.nbre_colonnes - 1:
                 ligne -= 1
@@ -553,19 +485,10 @@ class Jeu(object):
                 ligne = ligne_depart
                 colonne = colonne_depart
 
-<<<<<<< HEAD
-        if nb > nbre_max:
-            nbre_max = nb
-
-        # ----------------------------------------------------------------------------------------------------------------------------
-        # diagonales \
-        nb = 0
-=======
         # ----------------------------------------------------------------------------------------------------------------------------
         # diagonales \
         nb_cases_alignement = 0
         case_vide_debut_alignement = False
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
 
         ligne_depart = 0
         colonne_depart = self._grille.nbre_colonnes - 1
@@ -576,14 +499,6 @@ class Jeu(object):
             valeur_case = self._grille.valeur(ligne, colonne)
 
             if valeur_case != pion:
-<<<<<<< HEAD
-                if not possibilite_gain or (possibilite_gain and valeur_case == CASE_VIDE):
-                    if nb > nbre_max:
-                        nbre_max = nb
-                    nb = 0
-            else:
-                nb += 1
-=======
                 case_vide_fin_alignement = valeur_case == CASE_VIDE
 
                 if nb_cases_alignement > nbre_max and case_vide_fin_alignement:
@@ -595,7 +510,6 @@ class Jeu(object):
                 nb_cases_alignement += 1
                 if nb_cases_alignement > nbre_max and case_vide_debut_alignement:
                     nbre_max = nb_cases_alignement
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
 
             if ligne > 0 and colonne > 0:
                 ligne -= 1
@@ -616,14 +530,6 @@ class Jeu(object):
             valeur_case = self._grille.valeur(ligne, colonne)
 
             if valeur_case != pion:
-<<<<<<< HEAD
-                if not possibilite_gain or (possibilite_gain and valeur_case == CASE_VIDE):
-                    if nb > nbre_max:
-                        nbre_max = nb
-                    nb = 0
-            else:
-                nb += 1
-=======
                 case_vide_fin_alignement = valeur_case == CASE_VIDE
 
                 if nb_cases_alignement > nbre_max and case_vide_fin_alignement:
@@ -635,7 +541,6 @@ class Jeu(object):
                 nb_cases_alignement += 1
                 if nb_cases_alignement > nbre_max and case_vide_debut_alignement:
                     nbre_max = nb_cases_alignement
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
 
             if ligne > 0 and colonne > 0:
                 ligne -= 1
@@ -647,12 +552,6 @@ class Jeu(object):
                 ligne = ligne_depart
                 colonne = colonne_depart
 
-<<<<<<< HEAD
-        if nb > nbre_max:
-            nbre_max = nb
-
-=======
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
         return nbre_max
 
 
@@ -754,25 +653,14 @@ class PartieConsole(object):
         if nbre_joueurs_humains == 0:
             profondeur = self._demander_profondeur_ia()
             if profondeur != -1:
-<<<<<<< HEAD
-                self._joueur1 = IAMinMax(self._jeu, 'MinMax1', PION_JOUEUR_1, PION_JOUEUR_2, profondeur)
-                self._joueur2 = IAMinMax(self._jeu, 'MinMax2', PION_JOUEUR_2, PION_JOUEUR_1, profondeur)
-=======
                 self._joueur1 = IAMinMax(self._jeu, 'MinMax1', PION_JOUEUR_1, PION_JOUEUR_2, profondeur, UTILISATION_APLHA_BETA)
                 self._joueur2 = IAMinMax(self._jeu, 'MinMax2', PION_JOUEUR_2, PION_JOUEUR_1, profondeur, UTILISATION_APLHA_BETA)
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
             else:
                 self._joueur1 = IaAleatoire(self._jeu, 'Random1', PION_JOUEUR_1)
                 self._joueur2 = IaAleatoire(self._jeu, 'Random2', PION_JOUEUR_2)
 
         elif nbre_joueurs_humains == 1:
             nom = input('Pseudo du joueur ?')
-<<<<<<< HEAD
-            profondeur = self._demander_profondeur_ia()
-            self._joueur1 = JoueurHumain(self._jeu, nom, PION_JOUEUR_1)
-            if profondeur != -1:
-                self._joueur2 = IAMinMax(self._jeu, 'MinMax', PION_JOUEUR_2, PION_JOUEUR_1, profondeur)
-=======
             while nom == 'Minmax' or nom == 'Random':
                 print('Le nom du joueur doit être différent de "Minmax" ou "Random" !')
                 nom = input('Pseudo du joueur ?')
@@ -780,7 +668,6 @@ class PartieConsole(object):
             self._joueur1 = JoueurHumain(self._jeu, nom, PION_JOUEUR_1)
             if profondeur != -1:
                 self._joueur2 = IAMinMax(self._jeu, 'MinMax', PION_JOUEUR_2, PION_JOUEUR_1, profondeur, UTILISATION_APLHA_BETA)
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
             else:
                 self._joueur2 = IaAleatoire(self._jeu, 'Random', PION_JOUEUR_2)
 
@@ -821,11 +708,6 @@ class PartieConsole(object):
             try:
                 profondeur = int(input("Difficulté de l'IA (0-5), (-1) pour une IA aléatoire ?"))
             except ValueError:
-<<<<<<< HEAD
-                pass
-            else:
-                return profondeur
-=======
                 print('Veuillez saisir un nombre entier !')
             else:
                 if profondeur < -1:
@@ -833,7 +715,6 @@ class PartieConsole(object):
                     return self._demander_profondeur_ia()
                 else:
                     return profondeur
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
 
     def jouer(self):
         """
@@ -852,7 +733,7 @@ class PartieConsole(object):
 
             # on joue le coup
             self._jeu.jouer(choix, self._joueur_courant.pion)
-            self._effacer_ecran()
+            #self._effacer_ecran()
             self._affiche_plateau()
 
             # Préparation du tour de jeu suivant
@@ -937,11 +818,8 @@ class IAMinMax(object):
             # (si tous les coups possibles ont été testés la boucle s'arrête)
 
         # Parmi tous les coups possibles de l'IA on retourne le meilleur
-<<<<<<< HEAD
-=======
         if AFFICHAGE_NBRE_COUPS_SIMULES:
             print(self.nbre_coups_simules)
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
         self.nbre_coups_simules = 0
         return coup_retenu.colonne
 
@@ -983,11 +861,8 @@ class IAMinMax(object):
             # (si tous les coups possibles ont été testés la boucle s'arrête)
 
         # Parmi tous les coups possibles de l'IA on retourne le meilleur
-<<<<<<< HEAD
-=======
         if AFFICHAGE_NBRE_COUPS_SIMULES:
             print(self.nbre_coups_simules)
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
         self.nbre_coups_simules = 0
         return coup_retenu.colonne
 
@@ -1004,11 +879,7 @@ class IAMinMax(object):
         if profondeur <= 0 or self._jeu.fini:
             return self._evaluer_score(self.pion)
 
-<<<<<<< HEAD
-        # On va simuler les coups possible de l'adversaire en réponse au dernier coup joué par l'IA
-=======
         # On va simuler les coups possibles de l'adversaire en réponse au dernier coup joué par l'IA
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
         # On va retenir le score minimal obtenu en évaluant la situation du point de vue de l'IA
         # On va donc récupérer la pire situation dans laquelle va se trouver l'IA suite au coup de l'adversaire
         score_min = self._score_max
@@ -1142,13 +1013,8 @@ class IAMinMax(object):
         # évaluation de la situation du point de vue de l'IA
 
         # on calcule le nombre maximal de cases alignées pour l'Ia et l'adversaire
-<<<<<<< HEAD
-        nbre_pions_alignes_ia = self._jeu.nbre_cases_alignees_pion(self.pion, True)
-        nbre_pions_alignes_adversaire = self._jeu.nbre_cases_alignees_pion(self._pion_adversaire, True)
-=======
         nbre_pions_alignes_ia = self._jeu.nbre_cases_alignees_pion(self.pion)
         nbre_pions_alignes_adversaire = self._jeu.nbre_cases_alignees_pion(self._pion_adversaire)
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
 
         # on calcule le score pour chaque joueur (arrondi à l'entier inférieur) tel que la différence reste comprise
         # entre -score_max et score_max
@@ -1161,11 +1027,7 @@ class IAMinMax(object):
 
 puissance4 = Jeu()
 partie = PartieConsole(puissance4)
-<<<<<<< HEAD
-partie.jouer()
-=======
 partie.jouer()
 
 subprocess.call("launch.bat" if os.name=='nt' else 'welcome.py', shell=True)
 exit()
->>>>>>> 6b13c9ba5411fff77b4d522f711750df31df1c65
