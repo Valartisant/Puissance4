@@ -1,6 +1,6 @@
 # Puissance4
 ## LE jeu de l'année développé par TeamPrépa SARL
-### (Leur capital social est estimé à environ 6€)
+### (Leur capital social est estimé à environ 5€)
 
 Tout le programme doit respecter les contraintes suivantes :
 - Être écrit entièrement en langage Python

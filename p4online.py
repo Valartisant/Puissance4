@@ -81,6 +81,7 @@ def newlobby():
                 print("done")
                 myref.update({"playercount" : 1})
                 resetlobby()
+                wait()
                 return True
         print('No available lobby. Try to join one, or try again later.')
         input('press any key to continue...')
@@ -88,6 +89,25 @@ def newlobby():
         return False
     else:
         joinlobby()
+
+def wait():
+    i = 0
+    while (myref.child('playercount').get()!=2):
+        if(i!=40):
+            ime.sleep(0.5)
+            sys.stdout.write("\r" +'waiting for opponent to join...'+ i*'.')
+            sys.stdout.flush()
+            i+=1
+        else :
+            print('no opponent seems to come...')
+            n = ""
+            while(n not in ('o','n')):
+                n = input('Voulez-vous continuer d\'attendre ? o/n ')
+            if n = 'o':
+                wait()
+            else :
+                subprocess.call("welcome.py", shell=True)
+
 
 #GUEST - show available lobbies to join
 def showlobbies():
