@@ -6,6 +6,8 @@ Les différents fichiers envoyés sont :
 	- p4online.py (Appelé en module dans puissance4o, permet de communiquer avec la base de données)
 	- puissance4o.py (Fichier du jeu multi : gère le jeu en ligne)
 	- serviceAccountCredentials.json (Permet de se connecter à la base de données)	
+	- Rapport Puissance4.pdf (Rapport du projet)
+	- Puissance4.pdf (Diaporama du projet)
 
 Les différents modules utilisés sont :
 	- os
